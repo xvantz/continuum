@@ -23,18 +23,8 @@ type ModuleContract<Name extends ModuleName> = Name extends ModuleContractName
 export type ModuleServices<Name extends ModuleName> =
   ModuleContract<Name>["services"];
 
-type ModuleControllers<Name extends ModuleName> =
-  ModuleContract<Name> extends { controllers: infer Controllers }
-    ? Controllers
-    : Record<string, ControllerDefinition<Name>>;
-
-type ModuleEvents<Name extends ModuleName> =
-  ModuleContract<Name> extends { events: infer Events }
-    ? Events
-    : Record<string, EventDefinition<Name>>;
-
 export type ModuleLogger = pino.Logger;
-export type ModuleServer = FastifyInstance;
+export type ModuleServer = FastifyInstance<any, any, any, any>;
 
 export type ModuleRuntimeContext = {
   logger: ModuleLogger;
@@ -60,10 +50,7 @@ export type EventContext<Name extends ModuleName> = {
   services: ModuleServices<Name>;
 };
 
-export type ServiceBuilder<
-  Name extends ModuleName,
-  TService = unknown,
-> = (
+export type ServiceBuilder<Name extends ModuleName, TService = unknown> = (
   ctx: ServiceContext<Name>,
 ) => MaybePromise<TService>;
 
@@ -129,8 +116,7 @@ type ContractedServiceDefinitions<Name extends ModuleName> =
     : Record<string, never>;
 
 export type ModuleServiceDefinitions<Name extends ModuleName> =
-  ServiceDefinitionRecord<Name> &
-    ContractedServiceDefinitions<Name>;
+  ServiceDefinitionRecord<Name> & ContractedServiceDefinitions<Name>;
 
 type ContractedControllerDefinitions<Name extends ModuleName> =
   Name extends ModuleContractName
@@ -142,8 +128,7 @@ type ContractedControllerDefinitions<Name extends ModuleName> =
     : {};
 
 export type ModuleControllerDefinitions<Name extends ModuleName> =
-  ControllerDefinitionRecord<Name> &
-    ContractedControllerDefinitions<Name>;
+  ControllerDefinitionRecord<Name> & ContractedControllerDefinitions<Name>;
 
 type ContractedEventDefinitions<Name extends ModuleName> =
   Name extends ModuleContractName
@@ -164,10 +149,12 @@ type RequireControllers<
   ? { controllers?: Controllers }
   : { controllers: Controllers };
 
-type RequireEvents<Name extends ModuleName, Events> =
-  keyof ContractedEventDefinitions<Name> extends never
-    ? { events?: Events }
-    : { events: Events };
+type RequireEvents<
+  Name extends ModuleName,
+  Events,
+> = keyof ContractedEventDefinitions<Name> extends never
+  ? { events?: Events }
+  : { events: Events };
 
 export type ModuleDefinition<
   Name extends ModuleName,
@@ -186,7 +173,5 @@ export type DefinedModule<
   Controllers extends ModuleControllerDefinitions<Name>,
   Events extends ModuleEventDefinitions<Name>,
 > = ModuleDefinition<Name, Services, Controllers, Events> & {
-  init: (
-    ctx: ModuleRuntimeContext,
-  ) => Promise<InferServiceInstances<Services>>;
+  init: (ctx: ModuleRuntimeContext) => Promise<InferServiceInstances<Services>>;
 };
