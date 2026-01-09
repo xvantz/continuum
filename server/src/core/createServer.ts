@@ -1,9 +1,9 @@
 import fastify from "fastify";
 import type pino from "pino";
 
-export function createServer(logger: pino.Logger) {
+export function createServer(loggerInstance: pino.Logger) {
   const app = fastify({
-    logger,
+    loggerInstance,
   });
 
   return app;
