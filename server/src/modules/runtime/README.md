@@ -17,6 +17,9 @@ The runtime module owns the Continuum simulation loop:
 - `wsController` exposes the SPEC-compliant WebSocket endpoint (`/ws`) that
   streams metrics snapshots, handles run start/stop commands, node inspect
   requests, and trace subscribe/unsubscribe events.
+- `replayRecorderService` listens to metrics snapshots and runtime lifecycle to
+  build replay bundles and automatically write `demos/*.json` files for the
+  static replay mode.
 
 Consumers (controllers, metrics services, WebSocket adapters) should depend on
 `runtimeService` to start/stop runs, inspect active/persisted traces, and read

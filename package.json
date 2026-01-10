@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "pnpm -r --parallel --stream --filter ./server... --filter ./web... run dev",
     "build": "pnpm -r --filter ./server... --filter ./web... run build",
+    "replay:record": "pnpm --filter ./server exec tsx scripts/generateReplay.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
