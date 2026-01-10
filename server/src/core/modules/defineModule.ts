@@ -8,6 +8,8 @@ import type {
   ModuleControllerDefinitions,
   ModuleServiceDefinitions,
   ModuleServices,
+  ControllerDefinition,
+  EventDefinition,
   ServiceDefinitionRecord,
 } from "./types";
 
@@ -25,8 +27,9 @@ export function defineModule<
       definition.services,
       ctx,
     );
-    await registerControllers<Name, Services>(definition.controllers, ctx, services);
-    await registerEvents<Name, Services>(definition.events, ctx, services);
+    const contractedServices = services as unknown as ModuleServices<Name>;
+    await registerControllers<Name>(definition.controllers, ctx, contractedServices);
+    await registerEvents<Name>(definition.events, ctx, contractedServices);
     return services;
   };
 
@@ -62,38 +65,34 @@ async function instantiateServices<
   return instances;
 }
 
-async function registerControllers<
-  Name extends ModuleName,
-  Services extends ServiceDefinitionRecord<Name>,
->(
+async function registerControllers<Name extends ModuleName>(
   controllers: ModuleControllerDefinitions<Name> | undefined,
   ctx: ModuleRuntimeContext,
-  services: InferServiceInstances<Services>,
+  services: ModuleServices<Name>,
 ) {
   if (!controllers) return;
 
   for (const controller of Object.values(controllers)) {
-    await controller.register({
+    const typedController = controller as ControllerDefinition<Name>;
+    await typedController.register({
       server: ctx.server,
-      services: services as unknown as ModuleServices<Name>,
+      services: services as ModuleServices<Name>,
     });
   }
 }
 
-async function registerEvents<
-  Name extends ModuleName,
-  Services extends ServiceDefinitionRecord<Name>,
->(
+async function registerEvents<Name extends ModuleName>(
   events: ModuleEventDefinitions<Name> | undefined,
   ctx: ModuleRuntimeContext,
-  services: InferServiceInstances<Services>,
+  services: ModuleServices<Name>,
 ) {
   if (!events) return;
 
   for (const handler of Object.values(events)) {
-    await handler.register({
+    const typedHandler = handler as EventDefinition<Name>;
+    await typedHandler.register({
       bus: ctx.bus,
-      services: services as unknown as ModuleServices<Name>,
+      services: services as ModuleServices<Name>,
     });
   }
 }

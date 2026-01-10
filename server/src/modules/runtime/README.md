@@ -14,6 +14,9 @@ The runtime module owns the Continuum simulation loop:
 - `metricsService` attaches to the scheduler observer to generate 200 ms metrics
   snapshots, track EMA latency/error rates, maintain node trace buffers, and
   store recent span timelines with TTL cleanup for trace subscriptions.
+- `wsController` exposes the SPEC-compliant WebSocket endpoint (`/ws`) that
+  streams metrics snapshots, handles run start/stop commands, node inspect
+  requests, and trace subscribe/unsubscribe events.
 
 Consumers (controllers, metrics services, WebSocket adapters) should depend on
 `runtimeService` to start/stop runs, inspect active/persisted traces, and read

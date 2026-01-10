@@ -20,6 +20,11 @@ const TRACE_BUFFER_LIMIT = 50;
 const SLOW_THRESHOLD_MS = 750;
 const EDGE_ATTR_KEY = "__last_edge";
 
+type TraceEvent = {
+  type: "trace.span.started" | "trace.span.ended";
+  span: Span;
+};
+
 const ema = (current: number, sample: number, alpha = 0.2): number => {
   if (!Number.isFinite(current) || current === 0) return sample;
   return current * (1 - alpha) + sample * alpha;
@@ -84,7 +89,7 @@ const makeTraceBuffers = (): NodeTraceBuffers => ({
   slow: new RingBuffer(TRACE_BUFFER_LIMIT),
 });
 
-export const metricsService = defineService("runtime", ({ services, logger }) => {
+export const metricsService = defineService("runtime", ({ services }) => {
   const nodeStates = new Map<string, NodeState>();
   const edgeStatesByKey = new Map<string, EdgeState>();
   const edgeStatesById = new Map<string, EdgeState>();
@@ -92,6 +97,8 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
   const edgeMetrics = new Map<string, EdgeMetrics>();
   const traceStore = new Map<string, TraceSpanEntry>();
   const activeSpans = new Map<string, Span>();
+  const snapshotListeners = new Set<(snapshot: MetricsSnapshot) => void>();
+  const traceSubscribers = new Map<string, Set<(event: TraceEvent) => void>>();
 
   let latestSnapshot: MetricsSnapshot = {
     runId: "idle",
@@ -123,6 +130,10 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
       };
       activeSpans.set(`${token.trace.traceId}:${nodeId}`, span);
       upsertTraceSpan(span);
+      emitTraceEvent(token.trace.traceId, {
+        type: "trace.span.started",
+        span,
+      });
     },
     onNodeComplete({
       nodeId,
@@ -295,6 +306,7 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
       nodes: [...nodeMetrics.values()],
       edges: [...edgeMetrics.values()],
     };
+    notifySnapshot();
   };
 
   const finalizeSpan = (
@@ -317,6 +329,10 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
       }
       upsertTraceSpan(span);
       activeSpans.delete(key);
+      emitTraceEvent(token.trace.traceId, {
+        type: "trace.span.ended",
+        span,
+      });
     }
     const state = nodeStates.get(nodeId);
     if (state) {
@@ -373,6 +389,37 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
     };
   };
 
+  const notifySnapshot = () => {
+    for (const listener of snapshotListeners) {
+      listener(latestSnapshot);
+    }
+  };
+
+  const emitTraceEvent = (traceId: string, event: TraceEvent) => {
+    const listeners = traceSubscribers.get(traceId);
+    if (!listeners || listeners.size === 0) return;
+    for (const listener of listeners) {
+      listener(event);
+    }
+  };
+
+  const subscribeTrace = (
+    traceId: string,
+    listener: (event: TraceEvent) => void,
+  ) => {
+    const set = traceSubscribers.get(traceId) ?? new Set();
+    set.add(listener);
+    traceSubscribers.set(traceId, set);
+    return () => {
+      const nextSet = traceSubscribers.get(traceId);
+      if (!nextSet) return;
+      nextSet.delete(listener);
+      if (nextSet.size === 0) {
+        traceSubscribers.delete(traceId);
+      }
+    };
+  };
+
   const getTraceSpans = (traceId: string): Span[] => {
     const entry = traceStore.get(traceId);
     if (!entry) return [];
@@ -387,5 +434,10 @@ export const metricsService = defineService("runtime", ({ services, logger }) =>
     },
     getNodeInspect,
     getTraceSpans,
+    onSnapshot(listener: (snapshot: MetricsSnapshot) => void) {
+      snapshotListeners.add(listener);
+      return () => snapshotListeners.delete(listener);
+    },
+    subscribeTrace,
   };
 });
