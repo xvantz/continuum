@@ -1,5 +1,6 @@
 import { demoModule } from "./demo/demo.module";
+import { runtimeModule } from "./runtime/runtime.module";
 
-export { demoModule };
+export { demoModule, runtimeModule };
 
-export const modules = [demoModule] as const;
+export const modules = [runtimeModule, demoModule] as const;
