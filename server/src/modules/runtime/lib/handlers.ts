@@ -25,7 +25,8 @@ type HandlerDeps = {
 const RANDOM_STATE_KEY = "__rand_state";
 
 const nextRandom = (token: RuntimeToken): number => {
-  const current = token.attributes[RANDOM_STATE_KEY] ?? token.seed;
+  const attr = token.attributes[RANDOM_STATE_KEY];
+  const current = typeof attr === "number" ? attr : token.seed;
   const next = (1664525 * current + 1013904223) >>> 0;
   token.attributes[RANDOM_STATE_KEY] = next;
   return next / 0xffffffff;
@@ -87,11 +88,11 @@ export const createPipelineHandlers = (deps: HandlerDeps) => {
     return { type: "next", nextNodeId: "router" } as const;
   };
 
-  const handleRouter = async (token: RuntimeToken) => {
-    const ratio = nextRandom(token);
-    const branch = ratio > 0.2 ? "main" : "fallback";
-    token.attributes.route = branch === "main" ? 1 : 0;
-    return {
+    const handleRouter = async (token: RuntimeToken) => {
+      const ratio = nextRandom(token);
+      const branch = ratio > 0.2 ? "main" : "fallback";
+      token.attributes.route = branch === "main" ? 1 : 0;
+      return {
       type: "next",
       nextNodeId: branch === "main" ? "process-main" : "process-fallback",
     } as const;
@@ -106,8 +107,9 @@ export const createPipelineHandlers = (deps: HandlerDeps) => {
     return { type: "next", nextNodeId: "persist" } as const;
   };
 
-  const handlePersist = async (token: RuntimeToken) => {
-    const route = token.attributes.route === 1 ? "main" : "fallback";
+    const handlePersist = async (token: RuntimeToken) => {
+      const routeFlag = Number(token.attributes.route ?? 1);
+      const route = routeFlag === 1 ? "main" : "fallback";
     const serialized = JSON.stringify({
       digest: token.payload.digest,
       tasks: token.payload.tasks,
@@ -143,4 +145,3 @@ export const createPipelineHandlers = (deps: HandlerDeps) => {
     sink: handleSink,
   };
 };
-

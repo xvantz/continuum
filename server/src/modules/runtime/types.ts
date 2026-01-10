@@ -19,7 +19,7 @@ export type RuntimeToken = {
   seed: number;
   complexity: number;
   payload: RuntimePayload;
-  attributes: Record<string, number>;
+  attributes: Record<string, number | string>;
 };
 
 export type RuntimeGraph = Graph & {

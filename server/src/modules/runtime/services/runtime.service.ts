@@ -10,7 +10,7 @@ import type { Trace } from "@shared/trace";
 import { err, ok, type Result } from "neverthrow";
 
 import { createPipelineHandlers } from "../lib/handlers";
-import { PipelineScheduler } from "../lib/scheduler";
+import { PipelineScheduler, type SchedulerObserver } from "../lib/scheduler";
 import type { PersistedTrace, RuntimeToken } from "../types";
 
 const emptyPayload = {
@@ -38,6 +38,11 @@ type RuntimeErrorCode =
   | "run_not_active"
   | "node_enqueue_failed";
 
+type RunLifecycleObserver = {
+  onRunStart?(run: Run): void;
+  onRunStop?(run: Run): void;
+};
+
 const LOAD_TICK_MS = 50;
 
 export const runtimeService = defineService("runtime", ({ logger, services }) => {
@@ -46,9 +51,11 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
   let loadTimer: NodeJS.Timeout | null = null;
   let controls: SimulationControls = DEFAULT_SIMULATION_CONTROLS;
   let schedulerGraphVersion = services.graph.getGraph();
+  let schedulerObserver: SchedulerObserver | null = null;
 
   const persistStore = new Map<string, PersistedTrace>();
   const activeTokens = new Map<string, RuntimeToken>();
+  const lifecycleObservers = new Set<RunLifecycleObserver>();
 
   const getControls = () => controls;
 
@@ -76,6 +83,11 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
       handler: handlerMap[nodeId],
     });
   });
+
+  const setSchedulerObserver = (observer: SchedulerObserver | null) => {
+    schedulerObserver = observer;
+    scheduler.setObserver(observer);
+  };
 
   const hydrateGraph = (nextControls: SimulationControls) => {
     const baseGraph = services.graph.getGraph();
@@ -166,6 +178,7 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
       controls: params,
       graph: schedulerGraphVersion,
     });
+    lifecycleObservers.forEach((observer) => observer.onRunStart?.(run));
     startLoadLoop();
     logger.info({ runId: run.runId }, "runtime started");
     return ok(run);
@@ -183,8 +196,14 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
     };
     currentRun = null;
     activeTokens.clear();
+    lifecycleObservers.forEach((observer) => observer.onRunStop?.(finishedRun));
     logger.info({ runId: finishedRun.runId }, "runtime stopped");
     return ok(finishedRun);
+  };
+
+  const onRunLifecycle = (observer: RunLifecycleObserver) => {
+    lifecycleObservers.add(observer);
+    return () => lifecycleObservers.delete(observer);
   };
 
   return {
@@ -199,6 +218,7 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
     getSchedulerSnapshot: () => scheduler.snapshot(),
     getPersistedTraces: () => [...persistStore.values()],
     getActiveTraceCount: () => activeTokens.size,
+    attachObserver: setSchedulerObserver,
+    onRunLifecycle,
   };
 });
-

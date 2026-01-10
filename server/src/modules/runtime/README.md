@@ -11,8 +11,10 @@ The runtime module owns the Continuum simulation loop:
 - `PipelineScheduler` coordinates per-node queues with configurable concurrency,
   ensuring that handlers obey the requested worker limits. `getSchedulerSnapshot`
   exposes queue/inflight counters for downstream metrics (`threejsCosmos-0iz.3`).
+- `metricsService` attaches to the scheduler observer to generate 200 ms metrics
+  snapshots, track EMA latency/error rates, maintain node trace buffers, and
+  store recent span timelines with TTL cleanup for trace subscriptions.
 
 Consumers (controllers, metrics services, WebSocket adapters) should depend on
 `runtimeService` to start/stop runs, inspect active/persisted traces, and read
 node snapshot data instead of duplicating scheduling logic.
-

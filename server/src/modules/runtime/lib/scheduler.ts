@@ -2,6 +2,29 @@ import { err, ok, type Result } from "neverthrow";
 
 import type { RuntimeContext, RuntimeToken } from "../types";
 
+export type SchedulerObserver = {
+  onNodeQueued?(args: { nodeId: string; token: RuntimeToken }): void;
+  onNodeStart?(args: {
+    nodeId: string;
+    token: RuntimeToken;
+    startTime: number;
+  }): void;
+  onNodeComplete?(args: {
+    nodeId: string;
+    token: RuntimeToken;
+    startTime: number;
+    endTime: number;
+    durationMs: number;
+    status: "ok" | "error";
+    errorMessage?: string;
+  }): void;
+  onEdgeTransfer?(args: {
+    fromNodeId: string;
+    toNodeId: string;
+    token: RuntimeToken;
+  }): void;
+};
+
 export type NodeHandlerResult =
   | {
       type: "next";
@@ -39,6 +62,7 @@ export type SchedulerSnapshot = Array<{
 export class PipelineScheduler {
   private readonly nodes = new Map<string, PipelineNodeState>();
   private context: RuntimeContext | null = null;
+  private observer: SchedulerObserver | null = null;
 
   constructor(
     private readonly onComplete: (
@@ -47,6 +71,10 @@ export class PipelineScheduler {
       message?: string,
     ) => void,
   ) {}
+
+  setObserver(observer: SchedulerObserver | null) {
+    this.observer = observer;
+  }
 
   initializeNode(args: {
     nodeId: string;
@@ -95,6 +123,7 @@ export class PipelineScheduler {
       return err("node_not_initialized");
     }
     token.trace.location = { type: "node", nodeId };
+    this.observer?.onNodeQueued?.({ nodeId, token });
     node.queue.push(token);
     this.drain(node);
     return ok(undefined);
@@ -123,11 +152,21 @@ export class PipelineScheduler {
       const token = node.queue.shift();
       if (!token) break;
       node.inflight += 1;
-      void this.runHandler(token, node);
+      const startTime = Date.now();
+      this.observer?.onNodeStart?.({
+        nodeId: node.nodeId,
+        token,
+        startTime,
+      });
+      void this.runHandler(token, node, startTime);
     }
   }
 
-  private async runHandler(token: RuntimeToken, node: PipelineNodeState) {
+  private async runHandler(
+    token: RuntimeToken,
+    node: PipelineNodeState,
+    startedAt: number,
+  ) {
     if (!this.context) return;
     const context = this.context;
     const result = await node
@@ -137,15 +176,30 @@ export class PipelineScheduler {
         status: "error",
         errorMessage: "handler_failed",
       }));
+    const endTime = Date.now();
+    const durationMs = endTime - startedAt;
 
     if (result.type === "next") {
       node.processed += 1;
       node.inflight -= 1;
       if (node.inflight < 0) node.inflight = 0;
       this.drain(node);
+      this.observer?.onNodeComplete?.({
+        nodeId: node.nodeId,
+        token,
+        startTime: startedAt,
+        endTime,
+        durationMs,
+        status: "ok",
+      });
       const nextNode = this.nodes.get(result.nextNodeId);
       if (nextNode) {
         nextNode.queue.push(token);
+        this.observer?.onEdgeTransfer?.({
+          fromNodeId: node.nodeId,
+          toNodeId: result.nextNodeId,
+          token,
+        });
         this.drain(nextNode);
       } else {
         this.onComplete(token, "error", "next_node_missing");
@@ -161,6 +215,15 @@ export class PipelineScheduler {
     }
     if (node.inflight < 0) node.inflight = 0;
     this.drain(node);
+    this.observer?.onNodeComplete?.({
+      nodeId: node.nodeId,
+      token,
+      startTime: startedAt,
+      endTime,
+      durationMs,
+      status: result.status,
+      errorMessage: result.errorMessage,
+    });
     this.onComplete(token, result.status, result.errorMessage);
   }
 }
