@@ -1,7 +1,11 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
   "compilerOptions": {
-    "types": ["svelte"]
+    "types": ["svelte"],
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../shared/src/*"]
+    }
   },
   "include": [
     "src/**/*.d.ts",
