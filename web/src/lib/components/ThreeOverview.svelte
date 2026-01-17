@@ -1,18 +1,36 @@
 <svelte:options runes={false} />
 
 <script lang="ts">
-  import { onDestroy, onMount } from "svelte";
-  import * as THREE from "three";
-  import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-  import type { Graph } from "@shared/graph";
-  import type { MetricsSnapshot, NodeMetrics, EdgeMetrics } from "@shared/metrics";
+import { createEventDispatcher, onDestroy, onMount } from "svelte";
+import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import type { Graph } from "@shared/graph";
+import type { MetricsSnapshot, NodeMetrics, EdgeMetrics } from "@shared/metrics";
 
-  export let graph: Graph | null = null;
-  export let snapshot: MetricsSnapshot | null = null;
-  export let visualSpeed = 1;
+type TraceVisualState = {
+  traceId: string;
+  activeNodeId: string | null;
+  transition: {
+    from: string | null;
+    to: string;
+    startedAt: number;
+  } | null;
+};
+
+export let graph: Graph | null = null;
+export let snapshot: MetricsSnapshot | null = null;
+export let visualSpeed = 1;
+export let selectedNodeId: string | null = null;
+export let focusNodeId: string | null = null;
+export let trace: TraceVisualState | null = null;
+
+  const dispatch = createEventDispatcher<{
+    nodeSelect: { nodeId: string };
+  }>();
 
   const POSITION_SCALE = 0.4;
   const BASE_NODE_RADIUS = 12;
+  const TRACE_PARTICLE_DURATION_MS = 900;
 
   let container: HTMLDivElement | null = null;
   let renderer: THREE.WebGLRenderer | null = null;
@@ -37,6 +55,14 @@
       target: EdgeMetrics;
     }
   >();
+  let traceParticle: THREE.Mesh | null = null;
+  let traceTransitionState: {
+    from: THREE.Vector3;
+    to: THREE.Vector3;
+    startedAt: number;
+  } | null = null;
+  let traceEdgeHighlightId: string | null = null;
+  let lastTransitionStamp: number | null = null;
 
   const defaultNodeMetrics = (): NodeMetrics => ({
     nodeId: "",
@@ -56,6 +82,9 @@
   });
 
   let previousTimestamp = 0;
+  const nodePositions = new Map<string, THREE.Vector3>();
+  const pointer = new THREE.Vector2();
+  const raycaster = new THREE.Raycaster();
 
   onMount(() => {
     initScene();
@@ -68,6 +97,14 @@
     renderer?.dispose();
     controls?.dispose();
     nodeMeshes.forEach(({ mesh }) => mesh.geometry.dispose());
+    edgeLines.forEach(({ line }) => line.geometry.dispose());
+    if (traceParticle) {
+      traceParticle.geometry.dispose();
+      (traceParticle.material as THREE.Material).dispose();
+    }
+    window.removeEventListener("resize", handleResize);
+    container?.removeEventListener("pointerdown", handlePointerDown);
+    container?.removeEventListener("contextmenu", handleContextMenu);
   });
 
   const initScene = () => {
@@ -98,6 +135,18 @@
     controls.dampingFactor = 0.04;
     controls.maxDistance = 1000;
     controls.minDistance = 80;
+    controls.enableRotate = false;
+    controls.enablePan = false;
+    controls.enableZoom = false;
+    controls.mouseButtons = {
+      LEFT: THREE.MOUSE.NONE,
+      MIDDLE: THREE.MOUSE.NONE,
+      RIGHT: THREE.MOUSE.NONE,
+    };
+    controls.touches = {
+      ONE: THREE.TOUCH.NONE,
+      TWO: THREE.TOUCH.NONE,
+    };
 
     const ambientLight = new THREE.AmbientLight(0x3f51b5, 0.6);
     nextScene.add(ambientLight);
@@ -106,7 +155,16 @@
     directional.position.set(300, 400, 200);
     nextScene.add(directional);
 
+    traceParticle = new THREE.Mesh(
+      new THREE.SphereGeometry(4, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0xfde047 }),
+    );
+    traceParticle.visible = false;
+    nextScene.add(traceParticle);
+
     window.addEventListener("resize", handleResize);
+    container.addEventListener("pointerdown", handlePointerDown);
+    container.addEventListener("contextmenu", handleContextMenu);
   };
 
   const handleResize = () => {
@@ -123,6 +181,7 @@
 
     updateNodes(deltaSeconds);
     updateEdges(deltaSeconds);
+    updateTraceTransition();
 
     controls?.update();
     if (renderer && scene && camera) {
@@ -131,8 +190,28 @@
     animationFrame = requestAnimationFrame(loop);
   };
 
+  const handleContextMenu = (event: MouseEvent) => {
+    event.preventDefault();
+  };
+
+  const handlePointerDown = (event: PointerEvent) => {
+    if (event.button !== 0) return;
+    if (!container || !camera || !scene) return;
+    const rect = container.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const meshes = Array.from(nodeMeshes.values()).map((node) => node.mesh);
+    const intersects = raycaster.intersectObjects(meshes);
+    if (intersects.length > 0) {
+      const nodeId = intersects[0].object.userData.nodeId as string;
+      dispatch("nodeSelect", { nodeId });
+    }
+  };
+
   const updateNodes = (deltaSeconds: number) => {
     const smoothing = 1 - Math.exp(-deltaSeconds * visualSpeed * 3);
+    const pulse = (Math.sin(performance.now() * 0.006 * visualSpeed) + 1) / 2;
     for (const visual of nodeMeshes.values()) {
       const current = visual.current;
       const target = visual.target;
@@ -161,6 +240,7 @@
         1 + current.inflight * 0.06 + current.queueLen * 0.025;
       mesh.scale.setScalar(Math.max(0.4, magnitude));
 
+      const nodeId = visual.mesh.userData.nodeId as string;
       const material = mesh.material as THREE.MeshStandardMaterial;
       const heat = THREE.MathUtils.clamp(current.errorRate, 0, 1);
       material.color.setRGB(
@@ -168,7 +248,19 @@
         THREE.MathUtils.lerp(0.8, 0.2, heat),
         1,
       );
-      material.emissiveIntensity = 0.4 + current.throughput * 0.05;
+      const isSelected = selectedNodeId === nodeId;
+      const isTraceActive = trace?.activeNodeId === nodeId;
+      if (isSelected || isTraceActive) {
+        material.color.setRGB(0.98, 0.82, 0.35);
+      }
+      const baseGlow = current.throughput * 0.05;
+      if (isTraceActive) {
+        material.emissiveIntensity = 0.5 + baseGlow + pulse * 0.8;
+      } else if (isSelected) {
+        material.emissiveIntensity = 0.9 + baseGlow;
+      } else {
+        material.emissiveIntensity = 0.4 + baseGlow;
+      }
     }
   };
 
@@ -184,12 +276,81 @@
         smoothing,
       );
       const material = visual.line.material as THREE.LineBasicMaterial;
-      const opacity = THREE.MathUtils.clamp(current.rate / 80, 0.1, 1);
-      material.opacity = Math.max(0.2, opacity);
-      material.transparent = true;
-      const hue = THREE.MathUtils.lerp(0.55, 0.02, current.errorRate);
-      const color = new THREE.Color().setHSL(hue, 0.9, 0.5);
-      material.color = color;
+      const isTraceEdge = traceEdgeHighlightId === visual.current.edgeId;
+      if (isTraceEdge) {
+        material.opacity = 1;
+        material.transparent = true;
+        material.color = new THREE.Color(0xfde047);
+      } else {
+        const opacity = THREE.MathUtils.clamp(current.rate / 80, 0.1, 1);
+        material.opacity = Math.max(0.2, opacity);
+        material.transparent = true;
+        const hue = THREE.MathUtils.lerp(0.55, 0.02, current.errorRate);
+        const color = new THREE.Color().setHSL(hue, 0.9, 0.5);
+        material.color = color;
+      }
+    }
+  };
+
+  const updateTraceTransition = () => {
+    if (!traceParticle || !traceTransitionState) return;
+    const elapsed = performance.now() - traceTransitionState.startedAt;
+    const progress = Math.min(
+      1,
+      (elapsed * visualSpeed) / TRACE_PARTICLE_DURATION_MS,
+    );
+    traceParticle.position.lerpVectors(
+      traceTransitionState.from,
+      traceTransitionState.to,
+      progress,
+    );
+    traceParticle.visible = true;
+    if (progress >= 1) {
+      traceTransitionState = null;
+      traceParticle.visible = false;
+      traceEdgeHighlightId = null;
+    }
+  };
+
+  const triggerTraceTransition = (
+    transition: TraceVisualState["transition"],
+  ) => {
+    if (!transition || !traceParticle) {
+      traceTransitionState = null;
+      if (traceParticle) {
+        traceParticle.visible = false;
+      }
+      traceEdgeHighlightId = null;
+      return;
+    }
+    if (lastTransitionStamp === transition.startedAt) return;
+    lastTransitionStamp = transition.startedAt;
+    const toPosition = nodePositions.get(transition.to);
+    if (!toPosition) {
+      traceTransitionState = null;
+      traceParticle.visible = false;
+      traceEdgeHighlightId = null;
+      return;
+    }
+    const fromNode = transition.from
+      ? nodePositions.get(transition.from)
+      : null;
+    const fromPosition = (fromNode ?? toPosition).clone();
+    traceTransitionState = {
+      from: fromPosition,
+      to: toPosition.clone(),
+      startedAt: transition.startedAt,
+    };
+    traceParticle.position.copy(fromPosition);
+    traceParticle.visible = true;
+    if (transition.from) {
+      const edge = graph?.edges.find(
+        (edgeDef) =>
+          edgeDef.from === transition.from && edgeDef.to === transition.to,
+      );
+      traceEdgeHighlightId = edge?.edgeId ?? null;
+    } else {
+      traceEdgeHighlightId = null;
     }
   };
 
@@ -212,8 +373,28 @@
     const activeScene = scene;
     if (!activeScene) return;
     resetSceneObjects();
+    traceTransitionState = null;
+    traceEdgeHighlightId = null;
+    lastTransitionStamp = null;
+    if (traceParticle) {
+      traceParticle.visible = false;
+    }
 
-    const defaultSpacing = 180;
+    const defaultSpacing = 140;
+    const layoutPositions = graph.nodes.map((node, index) => {
+      const layout = graph.layout?.nodes?.[node.nodeId];
+      return (
+        layout ?? {
+          x: index * defaultSpacing,
+          y: 0,
+          z: 0,
+        }
+      );
+    });
+    const minX = Math.min(...layoutPositions.map((position) => position.x));
+    const maxX = Math.max(...layoutPositions.map((position) => position.x));
+    const yOffset = (maxX - minX) * 0.5;
+    nodePositions.clear();
     graph.nodes.forEach((node, index) => {
       const geometry = new THREE.SphereGeometry(BASE_NODE_RADIUS, 32, 32);
       const material = new THREE.MeshStandardMaterial({
@@ -224,22 +405,24 @@
         roughness: 0.4,
       });
       const mesh = new THREE.Mesh(geometry, material);
-      const layout = graph.layout?.nodes?.[node.nodeId];
-      const position = layout ?? {
-        x: index * defaultSpacing,
-        y: 0,
-        z: 0,
+      const position = layoutPositions[index];
+      const orientedPosition = {
+        x: position.y,
+        y: -(position.x - minX) + yOffset,
+        z: position.z,
       };
       mesh.position.set(
-        position.x * POSITION_SCALE,
-        position.y * POSITION_SCALE,
-        position.z * POSITION_SCALE,
+        orientedPosition.x * POSITION_SCALE,
+        orientedPosition.y * POSITION_SCALE,
+        orientedPosition.z * POSITION_SCALE,
       );
+      nodePositions.set(node.nodeId, mesh.position.clone());
       nodeMeshes.set(node.nodeId, {
         mesh,
         current: { ...defaultNodeMetrics(), nodeId: node.nodeId },
         target: { ...defaultNodeMetrics(), nodeId: node.nodeId },
       });
+      mesh.userData.nodeId = node.nodeId;
       activeScene.add(mesh);
     });
 
@@ -262,6 +445,21 @@
       });
       activeScene.add(line);
     });
+
+    if (camera && controls && nodePositions.size > 0) {
+      const bounds = new THREE.Box3().setFromPoints(
+        Array.from(nodePositions.values()),
+      );
+      const center = bounds.getCenter(new THREE.Vector3());
+      const size = bounds.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z, 1);
+      const fov = (camera.fov * Math.PI) / 180;
+      const distance = maxDim / (2 * Math.tan(fov / 2));
+      const offset = new THREE.Vector3(0, maxDim * 0.2, distance + 200);
+      camera.position.copy(center.clone().add(offset));
+      controls.target.copy(center);
+      controls.update();
+    }
   };
 
   const applySnapshot = () => {
@@ -278,11 +476,36 @@
     });
   };
 
+  const focusOnNode = (nodeId: string) => {
+    if (!controls || !camera) return;
+    const position = nodePositions.get(nodeId);
+    if (!position) return;
+    controls.target.copy(position);
+    const offset = new THREE.Vector3(position.x + 60, position.y + 60, position.z + 120);
+    camera.position.lerp(offset, 0.3);
+    controls.update();
+  };
+
+  $: if (trace?.transition) {
+    triggerTraceTransition(trace.transition);
+  }
+  $: if (!trace) {
+    traceTransitionState = null;
+    traceEdgeHighlightId = null;
+    lastTransitionStamp = null;
+    if (traceParticle) {
+      traceParticle.visible = false;
+    }
+  }
+
   $: if (graph && scene) {
     buildGraph();
   }
   $: if (snapshot) {
     applySnapshot();
+  }
+  $: if (focusNodeId) {
+    focusOnNode(focusNodeId);
   }
 </script>
 
