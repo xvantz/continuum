@@ -21,7 +21,6 @@ export let graph: Graph | null = null;
 export let snapshot: MetricsSnapshot | null = null;
 export let visualSpeed = 1;
 export let selectedNodeId: string | null = null;
-export let focusNodeId: string | null = null;
 export let trace: TraceVisualState | null = null;
 
   const dispatch = createEventDispatcher<{
@@ -31,7 +30,7 @@ export let trace: TraceVisualState | null = null;
   const POSITION_SCALE = 0.4;
   const BASE_NODE_RADIUS = 12;
   const TRACE_PARTICLE_DURATION_MS = 900;
-  const HALO_SCALE = 1.7;
+  const HALO_SCALE = 1.35;
   const haloBaseColor = new THREE.Color(0x22d3ee);
   const haloErrorColor = new THREE.Color(0xf87171);
   const emissiveBaseColor = new THREE.Color(0x0ea5e9);
@@ -321,19 +320,19 @@ export let trace: TraceVisualState | null = null;
 
       const halo = visual.halo;
       const haloStrength = THREE.MathUtils.clamp(
-        load * 0.35 + heat * 0.7 + pulse * 0.15,
+        load * 0.22 + heat * 0.45 + pulse * 0.12,
         0,
         1,
       );
       halo.visible = haloStrength > 0.05 || isSelected || isTraceActive;
-      halo.scale.setScalar(HALO_SCALE + haloStrength * 0.6);
+      halo.scale.setScalar(HALO_SCALE + haloStrength * 0.35);
       const haloMaterial = halo.material as THREE.MeshBasicMaterial;
       haloColor.copy(haloBaseColor).lerp(haloErrorColor, heat);
       if (isSelected || isTraceActive) {
         haloColor.set(0xfde047);
       }
       haloMaterial.color.copy(haloColor);
-      haloMaterial.opacity = 0.15 + haloStrength * 0.45;
+      haloMaterial.opacity = 0.08 + haloStrength * 0.28;
     }
   };
 
@@ -588,21 +587,6 @@ export let trace: TraceVisualState | null = null;
     });
   };
 
-  const focusOnNode = (nodeId: string) => {
-    if (!controls || !camera) return;
-    const position = nodePositions.get(nodeId);
-    if (!position) return;
-    controls.target.copy(position);
-    const offset = new THREE.Vector3(
-      position.x + 60,
-      position.y + 60,
-      position.z + 120,
-    );
-    camera.position.copy(offset);
-    camera.lookAt(position);
-    controls.update();
-  };
-
   $: if (trace?.transition) {
     triggerTraceTransition(trace.transition);
   }
@@ -620,9 +604,6 @@ export let trace: TraceVisualState | null = null;
   }
   $: if (snapshot) {
     applySnapshot();
-  }
-  $: if (focusNodeId) {
-    focusOnNode(focusNodeId);
   }
 </script>
 

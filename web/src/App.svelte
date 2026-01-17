@@ -22,7 +22,6 @@
     wsError,
     selectedNodeId,
     nodeInspect,
-    focusNodeId,
     activeTraceId,
     traceSpans,
     traceStatus,
@@ -46,7 +45,6 @@
     selectTrace,
     closeTraceView,
     loadReplay,
-    focusInspectNode,
     start,
   } = runtime;
 
@@ -81,7 +79,6 @@
           snapshot={$snapshot}
           visualSpeed={$visualSpeed}
           selectedNodeId={$selectedNodeId}
-          focusNodeId={$focusNodeId}
           trace={$traceVisualState}
           on:nodeselect={(event) => handleNodeSelect(event.detail.nodeId)}
         />
@@ -99,7 +96,6 @@
 
       <NodeInspectPanel
         node={$nodeInspect}
-        on:focus={focusInspectNode}
         on:clear={clearSelection}
         on:traceSelect={(event) => selectTrace(event.detail.traceId)}
       />

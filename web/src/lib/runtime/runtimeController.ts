@@ -32,7 +32,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
 
   const selectedNodeId = writable<string | null>(null);
   const nodeInspect = writable<NodeInspectPayload | null>(null);
-  const focusNodeId = writable<string | null>(null);
 
   const activeTraceId = writable<string | null>(null);
   const traceSpans = writable<Span[]>([]);
@@ -135,7 +134,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
 
   const handleNodeSelect = (nodeId: string) => {
     selectedNodeId.set(nodeId);
-    focusNodeId.set(nodeId);
     nodeInspect.set(null);
     lastInspectSeq = null;
     if (get(mode) === "live") {
@@ -148,7 +146,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
   const clearSelection = () => {
     selectedNodeId.set(null);
     nodeInspect.set(null);
-    focusNodeId.set(null);
     lastInspectSeq = null;
   };
 
@@ -202,7 +199,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
     if (nextMode === "replay") {
       selectedNodeId.set(null);
       nodeInspect.set(null);
-      focusNodeId.set(null);
       liveRuntime.disconnect();
       status.set("replay");
       if (get(replayRuntime.replayStatus) === "idle") {
@@ -215,7 +211,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
       run.set(null);
       nodeInspect.set(null);
       selectedNodeId.set(null);
-      focusNodeId.set(null);
       wsError.set(null);
       serverTimelineMs.set(0);
       resetTraceView();
@@ -228,13 +223,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
     void replayRuntime.loadReplay();
   };
 
-  const focusInspectNode = () => {
-    const current = get(nodeInspect);
-    if (current) {
-      focusNodeId.set(null);
-      focusNodeId.set(current.nodeId);
-    }
-  };
 
   const startPlaybackClock = () => {
     let playbackFrame: number | null = null;
@@ -323,7 +311,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
     wsError,
     selectedNodeId,
     nodeInspect,
-    focusNodeId,
     activeTraceId,
     traceSpans,
     traceStatus,
@@ -348,7 +335,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
     selectTrace,
     closeTraceView,
     loadReplay,
-    focusInspectNode,
     start,
   };
 };

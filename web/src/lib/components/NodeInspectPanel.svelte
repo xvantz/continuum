@@ -8,7 +8,6 @@
 
   const dispatch = createEventDispatcher<{
     clear: void;
-    focus: void;
     traceSelect: { traceId: string };
   }>();
 
@@ -35,13 +34,6 @@
       {/if}
     </div>
     <div class="flex gap-2">
-      <button
-        class="rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-wide text-slate-200 transition hover:border-emerald-400"
-        onclick={() => dispatch("focus")}
-        disabled={!node}
-      >
-        Focus
-      </button>
       <button
         class="rounded-full border border-white/15 px-3 py-1 text-xs uppercase tracking-wide text-slate-400 transition hover:border-white/40 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-slate-600"
         onclick={() => dispatch("clear")}
