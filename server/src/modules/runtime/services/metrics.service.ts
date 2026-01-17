@@ -230,16 +230,20 @@ export const metricsService = defineService("runtime", ({ services }) => {
     startSampling();
   };
 
-  const startSampling = () => {
-    stopSampling();
-    snapshotTimer = setInterval(sampleMetrics, SNAPSHOT_INTERVAL_MS);
-  };
-
-  const stopSampling = () => {
+  const clearSamplingTimer = () => {
     if (snapshotTimer) {
       clearInterval(snapshotTimer);
       snapshotTimer = null;
     }
+  };
+
+  const startSampling = () => {
+    clearSamplingTimer();
+    snapshotTimer = setInterval(sampleMetrics, SNAPSHOT_INTERVAL_MS);
+  };
+
+  const stopSampling = () => {
+    clearSamplingTimer();
     runId = null;
   };
 

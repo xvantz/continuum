@@ -33,6 +33,15 @@
       </div>
     </div>
     <div class="ml-auto flex items-center gap-3 text-sm text-slate-300">
+      {#if run?.status === "running"}
+        <button
+          class="rounded-full bg-emerald-400 px-4 py-1 font-semibold text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-emerald-400/30 disabled:text-emerald-200"
+          onclick={onStartRun}
+          disabled
+        >
+          Runned
+        </button>
+      {:else}
       <button
         class="rounded-full bg-emerald-400 px-4 py-1 font-semibold text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-emerald-400/30 disabled:text-emerald-200"
         onclick={onStartRun}
@@ -40,6 +49,7 @@
       >
         Start Run
       </button>
+      {/if}
       <button
         class="rounded-full border border-white/20 px-4 py-1 font-semibold text-slate-100 transition hover:border-rose-400 hover:text-white disabled:cursor-not-allowed disabled:border-white/10 disabled:text-slate-500"
         onclick={onStopRun}
