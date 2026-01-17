@@ -31,6 +31,13 @@ export let trace: TraceVisualState | null = null;
   const POSITION_SCALE = 0.4;
   const BASE_NODE_RADIUS = 12;
   const TRACE_PARTICLE_DURATION_MS = 900;
+  const HALO_SCALE = 1.7;
+  const haloBaseColor = new THREE.Color(0x22d3ee);
+  const haloErrorColor = new THREE.Color(0xf87171);
+  const emissiveBaseColor = new THREE.Color(0x0ea5e9);
+  const emissiveErrorColor = new THREE.Color(0xf87171);
+  const haloColor = new THREE.Color();
+  const emissiveColor = new THREE.Color();
 
   let container: HTMLDivElement | null = null;
   let renderer: THREE.WebGLRenderer | null = null;
@@ -43,6 +50,7 @@ export let trace: TraceVisualState | null = null;
     string,
     {
       mesh: THREE.Mesh;
+      halo: THREE.Mesh;
       current: NodeMetrics;
       target: NodeMetrics;
     }
@@ -96,7 +104,12 @@ export let trace: TraceVisualState | null = null;
     cancelAnimationFrame(animationFrame);
     renderer?.dispose();
     controls?.dispose();
-    nodeMeshes.forEach(({ mesh }) => mesh.geometry.dispose());
+    nodeMeshes.forEach(({ mesh, halo }) => {
+      mesh.geometry.dispose();
+      (mesh.material as THREE.Material).dispose();
+      halo.geometry.dispose();
+      (halo.material as THREE.Material).dispose();
+    });
     edgeLines.forEach(({ line }) => line.geometry.dispose());
     if (traceParticle) {
       traceParticle.geometry.dispose();
@@ -258,6 +271,10 @@ export let trace: TraceVisualState | null = null;
         THREE.MathUtils.clamp(0.6 + load * 0.2 - heat * 0.6, 0, 1),
         baseBlue,
       );
+      emissiveColor
+        .copy(emissiveBaseColor)
+        .lerp(emissiveErrorColor, heat);
+      material.emissive.copy(emissiveColor);
       const isSelected = selectedNodeId === nodeId;
       const isTraceActive = trace?.activeNodeId === nodeId;
       if (isSelected || isTraceActive) {
@@ -271,6 +288,22 @@ export let trace: TraceVisualState | null = null;
       } else {
         material.emissiveIntensity = 0.2 + baseGlow + loadPulse * 0.6 + heat * 0.6;
       }
+
+      const halo = visual.halo;
+      const haloStrength = THREE.MathUtils.clamp(
+        load * 0.35 + heat * 0.7 + pulse * 0.15,
+        0,
+        1,
+      );
+      halo.visible = haloStrength > 0.05 || isSelected || isTraceActive;
+      halo.scale.setScalar(HALO_SCALE + haloStrength * 0.6);
+      const haloMaterial = halo.material as THREE.MeshBasicMaterial;
+      haloColor.copy(haloBaseColor).lerp(haloErrorColor, heat);
+      if (isSelected || isTraceActive) {
+        haloColor.set(0xfde047);
+      }
+      haloMaterial.color.copy(haloColor);
+      haloMaterial.opacity = 0.15 + haloStrength * 0.45;
     }
   };
 
@@ -382,8 +415,13 @@ export let trace: TraceVisualState | null = null;
   const resetSceneObjects = () => {
     const activeScene = scene;
     if (!activeScene) return;
-    nodeMeshes.forEach(({ mesh }) => {
+    nodeMeshes.forEach(({ mesh, halo }) => {
       activeScene.remove(mesh);
+      activeScene.remove(halo);
+      mesh.geometry.dispose();
+      (mesh.material as THREE.Material).dispose();
+      halo.geometry.dispose();
+      (halo.material as THREE.Material).dispose();
     });
     nodeMeshes.clear();
 
@@ -424,12 +462,25 @@ export let trace: TraceVisualState | null = null;
       const geometry = new THREE.SphereGeometry(BASE_NODE_RADIUS, 32, 32);
       const material = new THREE.MeshStandardMaterial({
         color: 0x5de4ff,
-        emissive: 0x0f172a,
+        emissive: 0x0ea5e9,
         emissiveIntensity: 0.4,
         metalness: 0.1,
         roughness: 0.4,
       });
       const mesh = new THREE.Mesh(geometry, material);
+      const haloGeometry = new THREE.SphereGeometry(
+        BASE_NODE_RADIUS * HALO_SCALE,
+        24,
+        24,
+      );
+      const haloMaterial = new THREE.MeshBasicMaterial({
+        color: 0x22d3ee,
+        transparent: true,
+        opacity: 0.15,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      const halo = new THREE.Mesh(haloGeometry, haloMaterial);
       const position = layoutPositions[index];
       const orientedPosition = {
         x: position.y,
@@ -441,13 +492,16 @@ export let trace: TraceVisualState | null = null;
         orientedPosition.y * POSITION_SCALE,
         orientedPosition.z * POSITION_SCALE,
       );
+      halo.position.copy(mesh.position);
       nodePositions.set(node.nodeId, mesh.position.clone());
       nodeMeshes.set(node.nodeId, {
         mesh,
+        halo,
         current: { ...defaultNodeMetrics(), nodeId: node.nodeId },
         target: { ...defaultNodeMetrics(), nodeId: node.nodeId },
       });
       mesh.userData.nodeId = node.nodeId;
+      activeScene.add(halo);
       activeScene.add(mesh);
     });
 
@@ -509,8 +563,13 @@ export let trace: TraceVisualState | null = null;
     const position = nodePositions.get(nodeId);
     if (!position) return;
     controls.target.copy(position);
-    const offset = new THREE.Vector3(position.x + 60, position.y + 60, position.z + 120);
-    camera.position.lerp(offset, 0.3);
+    const offset = new THREE.Vector3(
+      position.x + 60,
+      position.y + 60,
+      position.z + 120,
+    );
+    camera.position.copy(offset);
+    camera.lookAt(position);
     controls.update();
   };
 

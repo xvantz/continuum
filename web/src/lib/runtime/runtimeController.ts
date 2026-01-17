@@ -231,6 +231,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
   const focusInspectNode = () => {
     const current = get(nodeInspect);
     if (current) {
+      focusNodeId.set(null);
       focusNodeId.set(current.nodeId);
     }
   };
