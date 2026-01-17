@@ -25,7 +25,7 @@ export let focusNodeId: string | null = null;
 export let trace: TraceVisualState | null = null;
 
   const dispatch = createEventDispatcher<{
-    nodeSelect: { nodeId: string };
+    nodeselect: { nodeId: string };
   }>();
 
   const POSITION_SCALE = 0.4;
@@ -93,6 +93,7 @@ export let trace: TraceVisualState | null = null;
   const nodePositions = new Map<string, THREE.Vector3>();
   const pointer = new THREE.Vector2();
   const raycaster = new THREE.Raycaster();
+  let hoverNodeId: string | null = null;
 
   onMount(() => {
     initScene();
@@ -117,6 +118,8 @@ export let trace: TraceVisualState | null = null;
     }
     window.removeEventListener("resize", handleResize);
     container?.removeEventListener("pointerdown", handlePointerDown);
+    container?.removeEventListener("pointermove", handlePointerMove);
+    container?.removeEventListener("pointerleave", handlePointerLeave);
     container?.removeEventListener("contextmenu", handleContextMenu);
   });
 
@@ -177,6 +180,8 @@ export let trace: TraceVisualState | null = null;
 
     window.addEventListener("resize", handleResize);
     container.addEventListener("pointerdown", handlePointerDown);
+    container.addEventListener("pointermove", handlePointerMove);
+    container.addEventListener("pointerleave", handlePointerLeave);
     container.addEventListener("contextmenu", handleContextMenu);
   };
 
@@ -218,7 +223,32 @@ export let trace: TraceVisualState | null = null;
     const intersects = raycaster.intersectObjects(meshes);
     if (intersects.length > 0) {
       const nodeId = intersects[0].object.userData.nodeId as string;
-      dispatch("nodeSelect", { nodeId });
+      dispatch("nodeselect", { nodeId });
+    }
+  };
+
+  const handlePointerMove = (event: PointerEvent) => {
+    if (!container || !camera || !scene) return;
+    const rect = container.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(pointer, camera);
+    const meshes = Array.from(nodeMeshes.values()).map((node) => node.mesh);
+    const intersects = raycaster.intersectObjects(meshes);
+    const nextHover =
+      intersects.length > 0
+        ? (intersects[0].object.userData.nodeId as string)
+        : null;
+    if (nextHover !== hoverNodeId) {
+      hoverNodeId = nextHover;
+      container.style.cursor = hoverNodeId ? "pointer" : "default";
+    }
+  };
+
+  const handlePointerLeave = () => {
+    hoverNodeId = null;
+    if (container) {
+      container.style.cursor = "default";
     }
   };
 
