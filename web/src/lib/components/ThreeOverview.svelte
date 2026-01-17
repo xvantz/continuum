@@ -243,10 +243,20 @@ export let trace: TraceVisualState | null = null;
       const nodeId = visual.mesh.userData.nodeId as string;
       const material = mesh.material as THREE.MeshStandardMaterial;
       const heat = THREE.MathUtils.clamp(current.errorRate, 0, 1);
+      const load = THREE.MathUtils.clamp(
+        current.inflight * 0.08 +
+          current.queueLen * 0.05 +
+          current.throughput * 0.03,
+        0,
+        2.5,
+      );
+      const loadPulse = pulse * load;
+      const baseBlue = THREE.MathUtils.lerp(0.6, 1, current.throughput * 0.03);
+      const redBoost = heat * (0.4 + pulse * 0.6);
       material.color.setRGB(
-        THREE.MathUtils.lerp(0.2, 1, heat),
-        THREE.MathUtils.lerp(0.8, 0.2, heat),
-        1,
+        THREE.MathUtils.clamp(0.1 + load * 0.15 + redBoost, 0, 1),
+        THREE.MathUtils.clamp(0.6 + load * 0.2 - heat * 0.6, 0, 1),
+        baseBlue,
       );
       const isSelected = selectedNodeId === nodeId;
       const isTraceActive = trace?.activeNodeId === nodeId;
@@ -259,7 +269,7 @@ export let trace: TraceVisualState | null = null;
       } else if (isSelected) {
         material.emissiveIntensity = 0.9 + baseGlow;
       } else {
-        material.emissiveIntensity = 0.4 + baseGlow;
+        material.emissiveIntensity = 0.2 + baseGlow + loadPulse * 0.6 + heat * 0.6;
       }
     }
   };
@@ -275,19 +285,34 @@ export let trace: TraceVisualState | null = null;
         target.errorRate,
         smoothing,
       );
-      const material = visual.line.material as THREE.LineBasicMaterial;
+      const material = visual.line.material as THREE.LineDashedMaterial;
       const isTraceEdge = traceEdgeHighlightId === visual.current.edgeId;
       if (isTraceEdge) {
         material.opacity = 1;
         material.transparent = true;
         material.color = new THREE.Color(0xfde047);
+        material.dashSize = 6;
+        material.gapSize = 4;
       } else {
         const opacity = THREE.MathUtils.clamp(current.rate / 80, 0.1, 1);
         material.opacity = Math.max(0.2, opacity);
         material.transparent = true;
+        const edgePulse = (Math.sin(performance.now() * 0.008 * visualSpeed) + 1) / 2;
+        const errorPulse = current.errorRate > 0 ? edgePulse * current.errorRate : 0;
         const hue = THREE.MathUtils.lerp(0.55, 0.02, current.errorRate);
-        const color = new THREE.Color().setHSL(hue, 0.9, 0.5);
+        const color = new THREE.Color().setHSL(
+          hue,
+          0.9,
+          THREE.MathUtils.clamp(0.45 + current.rate * 0.004, 0.3, 0.7),
+        );
+        color.r = THREE.MathUtils.clamp(color.r + errorPulse * 0.6, 0, 1);
+        color.g = THREE.MathUtils.clamp(color.g - errorPulse * 0.5, 0, 1);
+        color.b = THREE.MathUtils.clamp(color.b - errorPulse * 0.3, 0, 1);
         material.color = color;
+        material.dashSize = 8;
+        material.gapSize = 6;
+        material.dashOffset -=
+          (current.rate * 0.08 + 0.6) * deltaSeconds * visualSpeed;
       }
     }
   };
@@ -432,12 +457,15 @@ export let trace: TraceVisualState | null = null;
       if (!fromNode || !toNode) return;
       const points = [fromNode.mesh.position, toNode.mesh.position];
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const material = new THREE.LineBasicMaterial({
+      const material = new THREE.LineDashedMaterial({
         color: 0x5eead4,
         transparent: true,
         opacity: 0.4,
+        dashSize: 8,
+        gapSize: 6,
       });
       const line = new THREE.Line(geometry, material);
+      line.computeLineDistances();
       edgeLines.set(edge.edgeId, {
         line,
         current: { ...defaultEdgeMetrics(), edgeId: edge.edgeId },
