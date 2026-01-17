@@ -1,6 +1,7 @@
 node_modules/
 .pnpm-debug.log
 dist/
+server/demos/
 .env.*
 !.env.example
 .beads
