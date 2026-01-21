@@ -14,5 +14,7 @@
     min-height: 100vh;
     background-color: #050816;
     color: rgb(226 232 240);
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
   }
 }

@@ -1,6 +1,7 @@
 import type { Graph } from "@shared/graph";
 import type { MetricsSnapshot, NodeInspectPayload } from "@shared/metrics";
 import type { Run } from "@shared/run";
+import type { SimulationControls } from "@shared/controls";
 import type { Span } from "@shared/trace";
 import { get, type Writable } from "svelte/store";
 import { RuntimeClient } from "../runtimeClient";
@@ -208,9 +209,9 @@ export const createLiveRuntime = (
     client.reconnect();
   };
 
-  const startRun = () => {
+  const startRun = (controls: SimulationControls) => {
     if (getMode() !== "live") return;
-    client.send({ type: "run.start", controls: {} });
+    client.send({ type: "run.start", controls });
   };
 
   const stopRun = () => {

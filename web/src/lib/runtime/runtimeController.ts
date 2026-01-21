@@ -1,6 +1,10 @@
 import type { Graph } from "@shared/graph";
 import type { MetricsSnapshot, NodeInspectPayload } from "@shared/metrics";
 import type { Run } from "@shared/run";
+import {
+  DEFAULT_SIMULATION_CONTROLS,
+  type SimulationControls,
+} from "@shared/controls";
 import type { Span } from "@shared/trace";
 import { derived, get, writable } from "svelte/store";
 import { RuntimeClient } from "../runtimeClient";
@@ -26,6 +30,9 @@ export const createRuntimeController = (runtimeUrl: string) => {
   const graph = writable<Graph | null>(null);
   const snapshot = writable<MetricsSnapshot | null>(null);
   const run = writable<Run | null>(null);
+  const runControls = writable<SimulationControls>({
+    ...DEFAULT_SIMULATION_CONTROLS,
+  });
   const wsError = writable<WsError | null>(null);
   const serverTimelineMs = writable(0);
   const playbackTimeMs = writable(0);
@@ -68,7 +75,10 @@ export const createRuntimeController = (runtimeUrl: string) => {
     }
     if (pendingStart && (!currentRun || currentRun.status !== "running")) {
       pendingStart = false;
-      liveRuntimeInstance?.startRun();
+      liveRuntimeInstance?.startRun(get(runControls));
+    }
+    if (currentRun?.config) {
+      runControls.set({ ...currentRun.config });
     }
   };
 
@@ -122,7 +132,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
       liveRuntime.stopRun();
       return;
     }
-    liveRuntime.startRun();
+    liveRuntime.startRun(get(runControls));
   };
 
   const stopRun = () => {
@@ -320,6 +330,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
     inflightTotal,
     throughputTotal,
     runStartMs,
+    runControls,
     replaySource: replayRuntime.replaySource,
     replayStatus: replayRuntime.replayStatus,
     replayError: replayRuntime.replayError,

@@ -20,6 +20,12 @@
       <p>
         <span class="text-slate-400">Complexity:</span> {run.config.payloadComplexity}
       </p>
+      <p>
+        <span class="text-slate-400">Time Limit:</span>
+        {run.config.runDurationMs > 0
+          ? `${Math.round(run.config.runDurationMs / 1000)}s`
+          : "Unlimited"}
+      </p>
     </div>
   {:else}
     <p class="mt-4 text-sm text-slate-400">Waiting for runtime state…</p>
