@@ -245,6 +245,21 @@ export const metricsService = defineService("runtime", ({ services }) => {
   const stopSampling = () => {
     clearSamplingTimer();
     runId = null;
+    nodeStates.clear();
+    edgeStatesByKey.clear();
+    edgeStatesById.clear();
+    nodeMetrics.clear();
+    edgeMetrics.clear();
+    traceStore.clear();
+    activeSpans.clear();
+    latestSnapshot = {
+      runId: "idle",
+      seq: 0,
+      tServerMs: 0,
+      nodes: [],
+      edges: [],
+    };
+    notifySnapshot();
   };
 
   const sampleMetrics = () => {
