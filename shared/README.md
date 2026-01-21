@@ -9,7 +9,7 @@ a `Result` from `neverthrow` to comply with the global error-handling policy.
 
 | Module | Description | SPEC reference |
 | --- | --- | --- |
-| `controls.ts` | Simulation config fields (`requestRate`, `payloadComplexity`, `nodeConcurrency`, `failureRate`, `seed`). Includes range validation and helpers to parse run start payloads. | §5.1 |
+| `controls.ts` | Simulation config fields (`requestRate`, `payloadComplexity`, `nodeConcurrency`, `failureRate`, `seed`, `runDurationMs`). Includes range validation and helpers to parse run start payloads. | §5.1 |
 | `graph.ts` | Static graph description (`graphId`, node definitions with `kind`/`concurrency`, edge list, optional layout coordinates). | §3.2–3.3 |
 | `trace.ts` | Trace/token state, enums for `TraceStatus`, `SpanStatus`, and basic span metadata. | §3.4–3.5 |
 | `metrics.ts` | Node/edge metric payloads, per-frame snapshot format (200 ms cadence), and inspect payload snippets. | §6 |
@@ -19,4 +19,3 @@ a `Result` from `neverthrow` to comply with the global error-handling policy.
 Each module keeps serialization-centric data (IDs, timestamps, metrics, enums).
 Execution-specific items (e.g., actual handler functions) continue to live in
 `server`, but they must shape their inputs/outputs via these schemas.
-
