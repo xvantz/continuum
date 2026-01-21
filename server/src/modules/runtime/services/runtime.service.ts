@@ -49,6 +49,7 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
   let currentRun: Run | null = null;
   let issued = 0;
   let loadTimer: NodeJS.Timeout | null = null;
+  let runTimer: NodeJS.Timeout | null = null;
   let controls: SimulationControls = DEFAULT_SIMULATION_CONTROLS;
   let schedulerGraphVersion = services.graph.getGraph();
   let schedulerObserver: SchedulerObserver | null = null;
@@ -140,6 +141,13 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
     }
   };
 
+  const stopRunTimer = () => {
+    if (runTimer) {
+      clearTimeout(runTimer);
+      runTimer = null;
+    }
+  };
+
   const startLoadLoop = () => {
     stopLoadLoop();
     const tickRate = controls.requestRate / (1000 / LOAD_TICK_MS);
@@ -153,6 +161,23 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
         spawnToken();
       }
     }, LOAD_TICK_MS);
+  };
+
+  const startRunTimer = (durationMs: number) => {
+    stopRunTimer();
+    if (durationMs <= 0) return;
+    runTimer = setTimeout(() => {
+      if (!currentRun) return;
+      const runId = currentRun.runId;
+      stopRun().match(
+        () => {
+          logger.info({ runId, durationMs }, "runtime auto-stopped");
+        },
+        (error) => {
+          logger.warn({ error }, "runtime auto-stop failed");
+        },
+      );
+    }, durationMs);
   };
 
   const startRun = (
@@ -180,6 +205,7 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
     });
     lifecycleObservers.forEach((observer) => observer.onRunStart?.(run));
     startLoadLoop();
+    startRunTimer(params.runDurationMs);
     logger.info({ runId: run.runId }, "runtime started");
     return ok(run);
   };
@@ -188,6 +214,7 @@ export const runtimeService = defineService("runtime", ({ logger, services }) =>
     if (!currentRun) {
       return err("run_not_active");
     }
+    stopRunTimer();
     stopLoadLoop();
     scheduler.stop();
     const finishedRun: Run = {
