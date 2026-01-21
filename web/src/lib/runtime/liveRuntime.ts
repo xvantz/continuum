@@ -20,7 +20,7 @@ export type TraceVisualState = {
   transition: TraceTransition | null;
 };
 
-export type WsError = { code: string; message: string };
+export type WsError = { code: string; message: string; details?: unknown };
 
 type LiveRuntimeBindings = {
   graph: Writable<Graph | null>;
@@ -60,6 +60,138 @@ export const createLiveRuntime = (
     getSelectedNodeId,
     onDisconnect,
   } = bindings;
+
+  const formatWsError = (error: WsError): WsError => {
+    const code = error.code;
+    let message = error.message;
+
+    const controlHints: Record<
+      string,
+      { label: string; fix: string }
+    > = {
+      requestRate: {
+        label: "Rate (req/s)",
+        fix: "Set Rate between 20 and 200.",
+      },
+      payloadComplexity: {
+        label: "Complexity",
+        fix: "Set Complexity between 1 and 5.",
+      },
+      nodeConcurrency: {
+        label: "Concurrency",
+        fix: "Set Concurrency between 1 and 8.",
+      },
+      failureRate: {
+        label: "Failure Rate (%)",
+        fix: "Set Failure Rate between 0 and 20.",
+      },
+      seed: {
+        label: "Seed",
+        fix: "Use an integer seed value.",
+      },
+      runDurationMs: {
+        label: "Time Limit (sec)",
+        fix: "Set Time Limit between 0 and 3600 seconds.",
+      },
+    };
+
+    const buildIssueMessage = (issue: {
+      path?: unknown;
+      message?: string;
+    }) => {
+      const path = Array.isArray(issue.path)
+        ? issue.path.map(String)
+        : [];
+      let field: string | null = null;
+      for (let i = path.length - 1; i >= 0; i -= 1) {
+        const candidate = path[i];
+        if (controlHints[candidate]) {
+          field = candidate;
+          break;
+        }
+      }
+      if (field) {
+        const hint = controlHints[field];
+        return `${hint.label} is invalid. Fix: ${hint.fix}`;
+      }
+      if (path.length > 0) {
+        return `${path.join(".")}: ${issue.message ?? "Invalid value"}`;
+      }
+      return issue.message ?? "Invalid value";
+    };
+
+    const formatIssues = (issues: Array<{ path?: unknown; message?: string }>) =>
+      issues
+        .slice(0, 3)
+        .map(buildIssueMessage)
+        .join(" ");
+
+    const normalizeMessage = (value: unknown): string | null => {
+      if (typeof value === "string") {
+        const trimmed = value.trim();
+        if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+          try {
+            return normalizeMessage(JSON.parse(trimmed));
+          } catch {
+            return value;
+          }
+        }
+        return value;
+      }
+      if (Array.isArray(value)) {
+        const formatted = formatIssues(value);
+        return formatted || "Invalid payload";
+      }
+      if (value && typeof value === "object") {
+        const candidate = value as {
+          message?: unknown;
+          error?: unknown;
+          issues?: unknown;
+        };
+        if (Array.isArray(candidate.issues)) {
+          const formatted = formatIssues(
+            candidate.issues as Array<{ path?: unknown; message?: string }>,
+          );
+          return formatted || "Invalid payload";
+        }
+        if (typeof candidate.message === "string") {
+          return candidate.message;
+        }
+        if (typeof candidate.error === "string") {
+          return candidate.error;
+        }
+      }
+      return null;
+    };
+
+    const detailedMessage = error.details
+      ? normalizeMessage(error.details)
+      : null;
+    message = detailedMessage ?? normalizeMessage(message) ?? "Unexpected error";
+    const friendly = {
+      run_already_active:
+        "Run is already active. Fix: press Stop, then Start again.",
+      run_not_active: "No active run to stop. Fix: start a run first.",
+      trace_already_subscribed:
+        "Trace is already being streamed. Fix: close the current trace before subscribing again.",
+      trace_not_subscribed:
+        "Trace is not subscribed. Fix: select a trace ID from the list.",
+      node_not_found:
+        "Selected node is no longer available. Fix: pick a node from the graph.",
+      invalid_payload:
+        "Some inputs are invalid. Fix: update the highlighted settings.",
+      invalid_json:
+        "Invalid request format. Fix: reload the page and try again.",
+    }[code];
+    const resolvedMessage =
+      code === "invalid_payload" && message !== "Unexpected error"
+        ? message
+        : friendly ?? message;
+    return {
+      code,
+      message: resolvedMessage,
+    };
+  };
 
   const connect = () => {
     if (getMode() !== "live") return;
@@ -128,7 +260,7 @@ export const createLiveRuntime = (
     };
 
     const handleError = (event: CustomEvent<WsError>) => {
-      wsError.set(event.detail);
+      wsError.set(formatWsError(event.detail));
     };
 
     const handleNodeInspect = (event: CustomEvent<NodeInspectPayload>) => {
