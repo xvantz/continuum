@@ -44,6 +44,7 @@ export let trace: TraceVisualState | null = null;
   let camera: THREE.PerspectiveCamera | null = null;
   let controls: OrbitControls | null = null;
   let animationFrame = 0;
+  let interactionTarget: HTMLElement | null = null;
 
   const nodeMeshes = new Map<
     string,
@@ -116,10 +117,10 @@ export let trace: TraceVisualState | null = null;
       (traceParticle.material as THREE.Material).dispose();
     }
     window.removeEventListener("resize", handleResize);
-    container?.removeEventListener("pointerdown", handlePointerDown);
-    container?.removeEventListener("pointermove", handlePointerMove);
-    container?.removeEventListener("pointerleave", handlePointerLeave);
-    container?.removeEventListener("contextmenu", handleContextMenu);
+    interactionTarget?.removeEventListener("pointerdown", handlePointerDown);
+    interactionTarget?.removeEventListener("pointermove", handlePointerMove);
+    interactionTarget?.removeEventListener("pointerleave", handlePointerLeave);
+    interactionTarget?.removeEventListener("contextmenu", handleContextMenu);
   });
 
   const initScene = () => {
@@ -144,6 +145,7 @@ export let trace: TraceVisualState | null = null;
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
+    interactionTarget = renderer.domElement;
 
     controls = new OrbitControls(nextCamera, renderer.domElement);
     controls.enableDamping = true;
@@ -178,10 +180,10 @@ export let trace: TraceVisualState | null = null;
     nextScene.add(traceParticle);
 
     window.addEventListener("resize", handleResize);
-    container.addEventListener("pointerdown", handlePointerDown);
-    container.addEventListener("pointermove", handlePointerMove);
-    container.addEventListener("pointerleave", handlePointerLeave);
-    container.addEventListener("contextmenu", handleContextMenu);
+    interactionTarget.addEventListener("pointerdown", handlePointerDown);
+    interactionTarget.addEventListener("pointermove", handlePointerMove);
+    interactionTarget.addEventListener("pointerleave", handlePointerLeave);
+    interactionTarget.addEventListener("contextmenu", handleContextMenu);
   };
 
   const handleResize = () => {
@@ -213,8 +215,8 @@ export let trace: TraceVisualState | null = null;
 
   const handlePointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return;
-    if (!container || !camera || !scene) return;
-    const rect = container.getBoundingClientRect();
+    if (!interactionTarget || !camera || !scene) return;
+    const rect = interactionTarget.getBoundingClientRect();
     pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     raycaster.setFromCamera(pointer, camera);
@@ -227,8 +229,8 @@ export let trace: TraceVisualState | null = null;
   };
 
   const handlePointerMove = (event: PointerEvent) => {
-    if (!container || !camera || !scene) return;
-    const rect = container.getBoundingClientRect();
+    if (!interactionTarget || !camera || !scene) return;
+    const rect = interactionTarget.getBoundingClientRect();
     pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     raycaster.setFromCamera(pointer, camera);
@@ -240,14 +242,14 @@ export let trace: TraceVisualState | null = null;
         : null;
     if (nextHover !== hoverNodeId) {
       hoverNodeId = nextHover;
-      container.style.cursor = hoverNodeId ? "pointer" : "default";
+      interactionTarget.style.cursor = hoverNodeId ? "pointer" : "default";
     }
   };
 
   const handlePointerLeave = () => {
     hoverNodeId = null;
-    if (container) {
-      container.style.cursor = "default";
+    if (interactionTarget) {
+      interactionTarget.style.cursor = "default";
     }
   };
 
