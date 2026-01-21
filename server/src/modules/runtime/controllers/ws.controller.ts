@@ -123,9 +123,9 @@ const createSession = (
     });
   };
 
-  const sendError = (code: string, message: string) => {
-    logger.warn({ code, message }, "ws error");
-    sendEnvelope("error", { code, message });
+  const sendError = (code: string, message: string, details?: unknown) => {
+    logger.warn({ code, message, details }, "ws error");
+    sendEnvelope("error", { code, message, details });
   };
 
   const unsubscribeSnapshot = metrics.onSnapshot(sendMetricsSnapshot);
@@ -229,7 +229,11 @@ const createSession = (
       );
       const validated = ClientCommandSchema.safeParse(parsed);
       if (!validated.success) {
-        sendError("invalid_payload", validated.error.message);
+        sendError(
+          "invalid_payload",
+          "Invalid payload",
+          validated.error.issues,
+        );
         return;
       }
       handleCommand(validated.data);

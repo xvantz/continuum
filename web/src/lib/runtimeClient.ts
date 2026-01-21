@@ -22,6 +22,7 @@ type GraphDefinitionPayload = {
 type ErrorPayload = {
   code: string;
   message: string;
+  details?: unknown;
 };
 
 type TraceSnapshotPayload = {
