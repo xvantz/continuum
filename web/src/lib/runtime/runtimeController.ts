@@ -220,9 +220,6 @@ export const createRuntimeController = (runtimeUrl: string) => {
       nodeInspect.set(null);
       liveRuntime.disconnect();
       status.set("replay");
-      if (get(replayRuntime.replayStatus) === "idle") {
-        void replayRuntime.loadReplay();
-      }
     } else {
       replayRuntime.reset();
       snapshot.set(null);
@@ -237,9 +234,9 @@ export const createRuntimeController = (runtimeUrl: string) => {
     }
   };
 
-  const loadReplay = () => {
+  const loadReplayPreset = (presetId: Parameters<typeof replayRuntime.loadPreset>[0]) => {
     if (get(mode) !== "replay") return;
-    void replayRuntime.loadReplay();
+    replayRuntime.loadPreset(presetId);
   };
 
 
@@ -340,7 +337,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
     throughputTotal,
     runStartMs,
     runControls,
-    replaySource: replayRuntime.replaySource,
+    replayPresetId: replayRuntime.replayPresetId,
     replayStatus: replayRuntime.replayStatus,
     replayError: replayRuntime.replayError,
     replayBundle: replayRuntime.replayBundle,
@@ -354,7 +351,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
     clearSelection,
     selectTrace,
     closeTraceView,
-    loadReplay,
+    loadReplayPreset,
     start,
   };
 };

@@ -8,6 +8,7 @@
   import RunStatusCard from "./lib/components/RunStatusCard.svelte";
   import LiveMetricsCard from "./lib/components/LiveMetricsCard.svelte";
   import WsErrorBanner from "./lib/components/WsErrorBanner.svelte";
+  import ReplayPresetCard from "./lib/components/ReplayPresetCard.svelte";
   import { createRuntimeController } from "./lib/runtime/runtimeController";
 
   const runtimeUrl = import.meta.env.VITE_WS_URL ?? "ws://localhost:4000/ws";
@@ -31,7 +32,7 @@
     runStartMs,
     inflightTotal,
     throughputTotal,
-    replaySource,
+    replayPresetId,
     replayStatus,
     replayError,
     replayBundle,
@@ -45,7 +46,7 @@
     clearSelection,
     selectTrace,
     closeTraceView,
-    loadReplay,
+    loadReplayPreset,
     start,
   } = runtime;
 
@@ -56,13 +57,8 @@
   <AppHeader
     mode={$mode}
     status={$status}
-    bind:replaySource={$replaySource}
-    replayStatus={$replayStatus}
-    replayError={$replayError}
-    replayBundle={$replayBundle}
     onSwitchMode={switchMode}
     onReconnect={reconnect}
-    onLoadReplay={loadReplay}
   />
 
   <section class="mx-auto grid max-w-6xl gap-6 px-6 py-8 lg:grid-cols-[3fr_1fr] lg:flex-1 lg:min-h-0 lg:items-stretch">
@@ -88,6 +84,16 @@
     </div>
 
     <aside class="space-y-4 lg:h-full lg:overflow-y-auto lg:pr-2 lg:pb-2 lg:min-h-0">
+      {#if $mode === "replay"}
+        <ReplayPresetCard
+          replayPresetId={$replayPresetId}
+          replayStatus={$replayStatus}
+          replayError={$replayError}
+          replayBundle={$replayBundle}
+          onLoadReplay={loadReplayPreset}
+        />
+      {/if}
+
       <RunStatusCard run={$run} />
 
       <LiveMetricsCard

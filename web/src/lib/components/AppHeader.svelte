@@ -1,26 +1,14 @@
 <script lang="ts">
-  import type { ReplayBundle } from "@shared/replay";
-
   let {
     mode,
     status,
-    replaySource = $bindable(),
-    replayStatus,
-    replayError,
-    replayBundle,
     onSwitchMode,
     onReconnect,
-    onLoadReplay,
   } = $props<{
     mode: "live" | "replay";
     status: "connecting" | "connected" | "disconnected" | "replay";
-    replaySource: string;
-    replayStatus: "idle" | "loading" | "ready" | "error";
-    replayError: string | null;
-    replayBundle: ReplayBundle | null;
     onSwitchMode: (nextMode: "live" | "replay") => void;
     onReconnect: () => void;
-    onLoadReplay: () => void;
   }>();
 </script>
 
@@ -66,7 +54,7 @@
         {/if}
       </span>
       <button
-        class="rounded-full border border-white/20 px-4 py-1 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:text-white"
+        class="rounded-full border border-white/20 px-4 py-1 text-sm font-semibold text-slate-100 transition hover:border-emerald-400 hover:text-white disabled:cursor-not-allowed disabled:border-white/10 disabled:text-slate-500"
         onclick={onReconnect}
         disabled={mode === "replay"}
       >
@@ -74,37 +62,4 @@
       </button>
     </div>
   </div>
-  {#if mode === "replay"}
-    <div class="mx-auto mt-3 w-full max-w-6xl px-6">
-      <div class="rounded-2xl border border-white/10 bg-slate-900/50 p-4">
-        <div class="flex flex-wrap items-center gap-3">
-          <label class="text-xs uppercase tracking-[0.3em] text-emerald-300" for="replay-source">
-            Replay Source
-          </label>
-          <input
-            type="text"
-            class="flex-1 min-w-[200px] rounded-xl border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white placeholder:text-slate-500"
-            id="replay-source"
-            bind:value={replaySource}
-            placeholder="demos/latest.json"
-          />
-          <button
-            class="rounded-full bg-indigo-400 px-4 py-1 text-sm font-semibold text-slate-950 transition hover:bg-indigo-300 disabled:cursor-not-allowed disabled:bg-indigo-400/30 disabled:text-indigo-200"
-            onclick={onLoadReplay}
-            disabled={replayStatus === "loading"}
-          >
-            {replayStatus === "loading" ? "Loading…" : "Load Replay"}
-          </button>
-        </div>
-        {#if replayError}
-          <p class="mt-2 text-sm text-rose-300">{replayError}</p>
-        {:else if replayBundle}
-          <p class="mt-2 text-xs text-slate-400">
-            Recorded {new Date(replayBundle.meta.recordedAt).toLocaleString()} —
-            {(replayBundle.meta.durationMs / 1000).toFixed(1)}s
-          </p>
-        {/if}
-      </div>
-    </div>
-  {/if}
 </header>

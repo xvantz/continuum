@@ -1,0 +1,6245 @@
+{
+  "meta": {
+    "graphId": "continuum-v1",
+    "recordedAt": "2026-01-22T07:39:52.306Z",
+    "durationMs": 0,
+    "config": {
+      "requestRate": 30,
+      "payloadComplexity": 1,
+      "nodeConcurrency": 1,
+      "failureRate": 1,
+      "seed": 1,
+      "runDurationMs": 10000
+    }
+  },
+  "timeline": [
+    {
+      "t": 201,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.6400000000000001,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 1.1520000000000001,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 0,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 1,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 0,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 0,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 401,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.6301721600000001,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.38390988800000014,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 15,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 15,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.2621440000000001,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 602,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.1651958507110401,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.10063967367987209,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 13.5,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.06871947673600004,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 13.5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 13.5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 802,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.28522510108879495,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.09191808661713641,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 15,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 15,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.018014398509482003,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 15,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 1003,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.23477004889982112,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.15209577489816262,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 13.5,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.004722366482869652,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 13.5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 13.5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 1203,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.2615435596987947,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.03987099481490396,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.32768000000000014,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0012379400392853823,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 1404,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.1504820749136809,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.2359879420647582,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.08589934592000005,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00032451855365842736,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 1604,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.03944797304617198,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.14378282308462403,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.022517998136852502,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.40960000000000013,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.00008507059173023481,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 1803,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.17034104944621575,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.3336278043746958,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.005902958103587064,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.10737418240000006,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.000022300745198530677,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 2003,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0446538840660288,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0874585271500003,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0015474250491067279,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.20398046511104007,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.12800584600654935,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 2203,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.011705747784605055,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.10484672814120971,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.00040564819207303417,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 25,
+          "avgLatencyMs": 0.19484031880758568,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 5,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.03355596449554088,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 25,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 25,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 2404,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0030685915472475084,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.25788494070184936,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0001063382396627935,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 24.87562189054726,
+          "avgLatencyMs": 0.06384527566686969,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 4.975124378109452,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00879649475671907,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 2604,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.08272441286256167,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.13313898989534564,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000027875931498163346,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.02615102491314983,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0023059483215053644,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 2803,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.1816857084854434,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.1629015873671255,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.000007307508186654534,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0068553342748327506,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0006044905167927024,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 3004,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.24762781836520809,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.042703673718767765,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0000019156194260823675,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.0028079449189714954,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00015846356203410626,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 3205,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.13045014681752914,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.011194511843332658,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 5.021681388309363e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0007360859128388638,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 8.955223880597014,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00004154027200586877,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 3405,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.1365967232873344,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.002934574112658597,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 1.3164036458569703e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.00030150078989879867,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000010889533064706466,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 3606,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.11772801142943501,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0007692809961887754,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 3.450873173395297e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00007903662306723071,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.000002854625755714413,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 3805,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.09639769182815784,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.10260166239746493,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 9.046256971665371e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20.100502512562812,
+          "avgLatencyMs": 0.00003237340080833771,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10.050251256281406,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 7.483230141059993e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 4005,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.12767007652660065,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.02689641018752106,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 2.3714219875802478e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000008486492781500884,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.045226130653266,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 1.961683882098031e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 4206,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.033467944540989204,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.007050732552197524,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 6.216540455122368e-10,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.000003476067443302762,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 5.142436595887063e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 4407,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.07430942085375311,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0018483072341632684,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.6296287810675988e-10,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 24.87562189054726,
+          "avgLatencyMs": 0.0000011390377798214493,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 4.975124378109452,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.3480588989922187e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 4608,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.21301576882028628,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00048452265159249603,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.271974071841847e-11,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 24.87562189054726,
+          "avgLatencyMs": 3.7323989969189265e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 4.975124378109452,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 3.533855520174163e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 4807,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.21584080570162514,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.1281270147059791,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 1.1198723710889097e-11,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20.100502512562812,
+          "avgLatencyMs": 1.5287906291379928e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10.050251256281406,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 9.263790214805361e-10,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 5008,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.25658137216984683,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.1359877281430842,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.935678228467312e-12,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.0076329068475e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.045226130653266,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.4284470220699373e-10,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 5208,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.19526126722609238,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.11756836700634068,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 7.695704335233353e-13,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 1.6415264386447364e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 6.36602816153502e-11,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 5409,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.051186569635716786,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.2308198420005102,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.017382717255413e-13,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.303163067320859e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.6688160863774363e-11,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 5608,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.013418252110585345,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.06050803666138176,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 5.2884477503220316e-14,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20.100502512562812,
+          "avgLatencyMs": 1.7625755923746243e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10.050251256281406,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.08192000000437473,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20.100502512562812,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10.050251256281406,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 5809,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.1635175142812773,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.015861818762561264,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.3863348470604192e-14,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.2097152000000001,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.620486160874536e-10,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.045226130653266,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.02147483648114681,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.045226130653266,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 6009,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.1708651352637512,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.004158080617692861,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 3.634193621478067e-15,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.054975581388800036,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.20000000018925512,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.005629499534513752,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 6208,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.044791270018580805,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0010900158854444779,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 9.526820527087468e-16,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.014411518807585602,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.21242880004961215,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.1294757395259756,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 6409,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.11414176268775088,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00028574112427395734,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.497398840252818e-16,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0037778931862957215,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.08701083650032117,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.03394128826229736,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 6610,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.029921578238017776,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0000749053212816723,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 6.546781215792349e-17,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0009903520314283058,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 24.87562189054726,
+          "avgLatencyMs": 0.02851171090442525,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 4.975124378109452,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00889750507023168,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 6809,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.007843762205626935,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.000019635980542062714,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 1.7161994150326704e-17,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.16025961484292675,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 25.125628140703515,
+          "avgLatencyMs": 0.13734271742916207,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 5.025125628140703,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0023324275691308143,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 25.125628140703515,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 5.025125628140703,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 25.125628140703515,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 5.025125628140703,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 7009,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.10445619519963188,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000005147454483218489,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 4.498913794543245e-18,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.042011096473384205,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.0562555770589848,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.16061143189268223,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.6400000000000001,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 7210,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.09291856483441233,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0000013493743080488282,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.179363257756745e-18,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.011012956873918832,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.014747061992550515,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.042103323202075306,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.1677721600000001,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 7410,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.1843580442599522,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.12800035373037863,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 3.0916300184138424e-19,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.08480698056675659,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.10844039659214873,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.01103713355748483,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.043980465111040035,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 7609,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.04832835515448093,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.03355452472829639,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 8.104522595470784e-20,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.022231641113691844,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.028426999324252245,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.002893318339293304,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.011529215046068483,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 7810,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.23820498833361628,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00879611733037453,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.1245519712670938e-20,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0058278913281076365,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.01164369892321372,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0007584660427357043,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0030223145490365774,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 8010,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.06244400846172753,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.002305849381453702,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 5.569385519558412e-21,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0015277467443154489,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0030523258105269384,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 8.955223880597014,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.00019882732230690854,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0007922816251426447,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 8211,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.14436932215419115,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.08252446458025182,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.4599809976391208e-21,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0004004896425418291,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.0012502326519918342,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00005212138957882226,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.00020769187434139353,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 8410,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.14024555158678834,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.02163329324292554,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 3.8272525864510973e-22,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.00010498595685448528,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.00032774098832374747,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 8.955223880597014,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.000013663309549750785,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.00005444517870735028,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 8610,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.036764529875167054,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.005671038023873474,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 1.0032913020226367e-22,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000027521438673662194,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.000134242708817407,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.00000358175461860987,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000014272476927059634,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 8811,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.13763760091959584,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0014866285917302887,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 2.6300679507742216e-23,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.000007214580019668504,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 24.87562189054726,
+          "avgLatencyMs": 0.00004398865082528794,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 4.975124378109452,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 9.38935482740866e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.0000037414441915671226,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 24.87562189054726,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 4.975124378109452,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 9011,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.036080871255466544,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.0003897107655505449,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 6.894565328877577e-24,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.000001891258864675981,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 25,
+          "avgLatencyMs": 0.000014414201102430359,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 5,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 2.461363031876217e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 9.807971461541723e-7,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 25,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 25,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 5,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 9211,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.21937838391439307,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 0.00010216033892448208,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 1.8073689335732844e-24,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 4.957821638216204e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 20,
+          "avgLatencyMs": 0.0000059040567715554765,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 10,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 6.452315506281592e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30,
+          "avgLatencyMs": 2.5711008708143947e-7,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 20,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 10,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 9412,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.25750872707285466,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.000026780719887019443,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.737909217226353e-25,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.299663195528549e-7,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.10240154771305834,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.691435796078682e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 6.739986666787689e-8,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 9613,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.33304036774978646,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 0.000007020405034062827,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.2420144738405855e-25,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 3.4069890872863605e-8,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 19.90049751243781,
+          "avgLatencyMs": 0.04194367394326871,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 9.950248756218905,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 4.433997453272501e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 29.850746268656714,
+          "avgLatencyMs": 1.7668470647783922e-8,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 19.90049751243781,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 9.950248756218905,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 29.850746268656714,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 9812,
+      "nodes": [
+        {
+          "nodeId": "receive",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.24730453416340006,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "validate",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0000018403570572493662,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "transform",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 3.255866422304666e-26,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "router",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.0819200089312175,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-main",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 0.07653128246218427,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "process-fallback",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 8.955223880597014,
+          "avgLatencyMs": 0,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "persist",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 1.1623458283906668e-9,
+          "errorRate": 0
+        },
+        {
+          "nodeId": "sink",
+          "inflight": 0,
+          "queueLen": 0,
+          "throughput": 30.15075376884422,
+          "avgLatencyMs": 4.6316835694926705e-9,
+          "errorRate": 0
+        }
+      ],
+      "edges": [
+        {
+          "edgeId": "receive-validate",
+          "from": "receive",
+          "to": "validate",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "validate-transform",
+          "from": "validate",
+          "to": "transform",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "transform-router",
+          "from": "transform",
+          "to": "router",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-main",
+          "from": "router",
+          "to": "process-main",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "router-fallback",
+          "from": "router",
+          "to": "process-fallback",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "main-persist",
+          "from": "process-main",
+          "to": "persist",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "fallback-persist",
+          "from": "process-fallback",
+          "to": "persist",
+          "rate": 8.955223880597014,
+          "errorRate": 0
+        },
+        {
+          "edgeId": "persist-sink",
+          "from": "persist",
+          "to": "sink",
+          "rate": 30.15075376884422,
+          "errorRate": 0
+        }
+      ]
+    },
+    {
+      "t": 0,
+      "nodes": [],
+      "edges": []
+    }
+  ]
+}

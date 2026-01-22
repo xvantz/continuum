@@ -4,11 +4,14 @@ import type { Run } from "@shared/run";
 import type { ReplayBundle, ReplayFrame, TraceSample } from "@shared/replay";
 import { parseReplayBundle } from "@shared/replay";
 import { CONTINUUM_GRAPH } from "@shared/graphPresets";
-import { err, ok, ResultAsync } from "neverthrow";
 import { get, writable, type Readable, type Writable } from "svelte/store";
 import { normalizeTraceSample } from "./traceUtils";
+import easyPreset from "../replayPresets/easy.json";
+import midPreset from "../replayPresets/mid.json";
+import hardPreset from "../replayPresets/hard.json";
 
 export type ReplayStatus = "idle" | "loading" | "ready" | "error";
+export type ReplayPresetId = "easy" | "mid" | "hard";
 
 type ReplayRuntimeBindings = {
   graph: Writable<Graph | null>;
@@ -21,31 +24,11 @@ type ReplayRuntimeBindings = {
   onResetTrace: () => void;
 };
 
-const toError = (error: unknown) =>
-  error instanceof Error
-    ? error
-    : new Error("Unknown error loading replay bundle");
-
-const fetchReplayBundle = (source: string) =>
-  ResultAsync.fromPromise(fetch(source), toError)
-    .andThen((response) =>
-      response.ok
-        ? ok(response)
-        : err(new Error(`Unable to load replay (${response.status})`)),
-    )
-    .andThen((response) =>
-      ResultAsync.fromPromise(response.json(), toError),
-    )
-    .andThen((raw) => {
-      const parsed = parseReplayBundle(raw);
-      if (parsed.isErr()) {
-        return err(new Error(parsed.error.message));
-      }
-      if (parsed.value.timeline.length === 0) {
-        return err(new Error("Replay file does not include any frames"));
-      }
-      return ok(parsed.value);
-    });
+const PRESET_BUNDLES: Record<ReplayPresetId, ReplayBundle> = {
+  easy: easyPreset as ReplayBundle,
+  mid: midPreset as ReplayBundle,
+  hard: hardPreset as ReplayBundle,
+};
 
 const buildReplaySnapshot = (
   bundle: ReplayBundle,
@@ -76,7 +59,7 @@ export const createReplayRuntime = (bindings: ReplayRuntimeBindings) => {
     onResetTrace,
   } = bindings;
 
-  const replaySource = writable("demos/latest.json");
+  const replayPresetId = writable<ReplayPresetId>("easy");
   const replayStatus = writable<ReplayStatus>("idle");
   const replayError = writable<string | null>(null);
   const replayBundle = writable<ReplayBundle | null>(null);
@@ -174,19 +157,28 @@ export const createReplayRuntime = (bindings: ReplayRuntimeBindings) => {
     replayAnimationFrame = requestAnimationFrame(stepReplay);
   };
 
-  const loadReplay = async () => {
+  const loadPreset = (presetId: ReplayPresetId) => {
     replayStatus.set("loading");
     replayError.set(null);
-    const result = await fetchReplayBundle(get(replaySource));
-    if (result.isErr()) {
+    const parsed = parseReplayBundle(PRESET_BUNDLES[presetId]);
+    if (parsed.isErr()) {
       replayStatus.set("error");
-      replayError.set(result.error.message);
+      replayError.set(parsed.error.message);
       replayBundle.set(null);
       replayTraceSamples.set([]);
       stopPlayback();
       return;
     }
-    const bundle = result.value;
+    if (parsed.value.timeline.length === 0) {
+      replayStatus.set("error");
+      replayError.set("Replay preset does not include any frames");
+      replayBundle.set(null);
+      replayTraceSamples.set([]);
+      stopPlayback();
+      return;
+    }
+    const bundle = parsed.value;
+    replayPresetId.set(presetId);
     replayBundle.set(bundle);
     replayTraceSamples.set((bundle.traceSamples ?? []).map(normalizeTraceSample));
     run.set({
@@ -236,13 +228,13 @@ export const createReplayRuntime = (bindings: ReplayRuntimeBindings) => {
   };
 
   return {
-    replaySource,
+    replayPresetId,
     replayStatus,
     replayError,
     replayBundle,
     replayTraceSamples,
     currentReplayFrame,
-    loadReplay,
+    loadPreset,
     reset,
     start,
     startPlayback,
