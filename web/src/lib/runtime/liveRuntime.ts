@@ -92,7 +92,7 @@ export const createLiveRuntime = (
       },
       runDurationMs: {
         label: "Time Limit (sec)",
-        fix: "Set Time Limit between 0 and 3600 seconds.",
+        fix: "Set Time Limit between 5 and 3600 seconds.",
       },
     };
 

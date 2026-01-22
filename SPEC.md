@@ -172,7 +172,7 @@ failureRate: 0-20% (Probability of error).
 
 seed: int (For deterministic randomness).
 
-runDurationMs: 0 or positive ms (0 = no limit, otherwise auto-stop).
+runDurationMs: 5000-3600000 ms (auto-stop duration).
 
 5.2 Deterministic Load Generation
 No sleep(). Duration comes from:

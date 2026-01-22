@@ -11,9 +11,9 @@ export const SimulationControlsSchema = z.object({
   runDurationMs: z
     .number()
     .int()
-    .min(0)
+    .min(5 * 1000)
     .max(60 * 60 * 1000)
-    .default(0),
+    .default(5 * 60 * 1000),
 });
 
 export type SimulationControls = z.infer<typeof SimulationControlsSchema>;
@@ -24,7 +24,7 @@ export const DEFAULT_SIMULATION_CONTROLS: SimulationControls = {
   nodeConcurrency: 2,
   failureRate: 2,
   seed: 1,
-  runDurationMs: 0,
+  runDurationMs: 5 * 60 * 1000,
 };
 
 export const parseSimulationControls = makeParser(SimulationControlsSchema);

@@ -170,20 +170,24 @@
       </span>
       <input
         type="number"
-        min="0"
+        min="5"
         max="3600"
         step="5"
         value={Math.round(runControls.runDurationMs / 1000)}
-        placeholder="0-3600"
+        placeholder="5-3600"
         class="rounded-lg border border-white/10 bg-slate-950/40 px-2.5 py-1.5 text-xs text-slate-100 disabled:cursor-not-allowed"
         disabled={mode !== "live" || run?.status === "running"}
-        oninput={(event) =>
+        oninput={(event) => {
+          const seconds = Number((event.target as HTMLInputElement).value);
+          const safeSeconds = Number.isFinite(seconds) ? seconds : 5;
+          const clampedSeconds = Math.min(
+            3600,
+            Math.max(5, Math.round(safeSeconds)),
+          );
           updateControls({
-            runDurationMs: Math.max(
-              0,
-              Math.round(Number((event.target as HTMLInputElement).value) * 1000),
-            ),
-          })}
+            runDurationMs: clampedSeconds * 1000,
+          });
+        }}
       />
     </label>
   </div>
