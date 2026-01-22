@@ -64,12 +64,20 @@ export const createRuntimeController = (runtimeUrl: string) => {
     traceVisualState.set(null);
   };
 
+  const resetRightPanel = () => {
+    clearSelection();
+    resetTraceView();
+  };
+
   let userStartedRun = false;
   let pendingStart = false;
   let liveRuntimeInstance: ReturnType<typeof createLiveRuntime> | null = null;
 
   const handleRuntimeState = (currentRun: Run | null) => {
     if (get(mode) !== "live") return;
+    if (!currentRun || currentRun.status !== "running") {
+      resetRightPanel();
+    }
     if (currentRun?.status === "running" && !userStartedRun) {
       liveRuntimeInstance?.stopRun();
     }
@@ -138,6 +146,7 @@ export const createRuntimeController = (runtimeUrl: string) => {
   const stopRun = () => {
     userStartedRun = false;
     liveRuntime.stopRun();
+    resetRightPanel();
   };
 
   let lastInspectSeq: number | null = null;

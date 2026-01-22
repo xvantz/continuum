@@ -129,9 +129,18 @@ const createSession = (
   };
 
   const unsubscribeSnapshot = metrics.onSnapshot(sendMetricsSnapshot);
+  const unsubscribeRun = runtime.onRunLifecycle({
+    onRunStart(run) {
+      sendEnvelope("runtime.state", { run });
+    },
+    onRunStop(run) {
+      sendEnvelope("runtime.state", { run });
+    },
+  });
 
   const cleanup = () => {
     unsubscribeSnapshot();
+    unsubscribeRun();
     for (const unsubscribe of traceSubscriptions.values()) {
       unsubscribe();
     }
