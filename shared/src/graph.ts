@@ -7,6 +7,7 @@ export const NodeKindSchema = z.enum([
   "validate",
   "transform",
   "router",
+  "db",
   "persist",
   "sink",
 ]);

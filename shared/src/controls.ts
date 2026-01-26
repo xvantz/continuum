@@ -3,7 +3,7 @@ import { z } from "zod";
 import { makeParser } from "./parser";
 
 export const SimulationControlsSchema = z.object({
-  requestRate: z.number().int().min(20).max(200),
+  requestRate: z.number().int().min(500).max(10000),
   payloadComplexity: z.number().int().min(1).max(5),
   nodeConcurrency: z.number().int().min(1).max(8),
   failureRate: z.number().min(0).max(20),
@@ -19,7 +19,7 @@ export const SimulationControlsSchema = z.object({
 export type SimulationControls = z.infer<typeof SimulationControlsSchema>;
 
 export const DEFAULT_SIMULATION_CONTROLS: SimulationControls = {
-  requestRate: 40,
+  requestRate: 500,
   payloadComplexity: 2,
   nodeConcurrency: 2,
   failureRate: 2,

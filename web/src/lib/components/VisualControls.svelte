@@ -74,11 +74,11 @@
       </span>
       <input
         type="number"
-        min="20"
-        max="200"
+        min="500"
+        max="10000"
         step="1"
         value={runControls.requestRate}
-        placeholder="20-200"
+        placeholder="500-10000"
         class="rounded-lg border border-white/10 bg-slate-950/40 px-2.5 py-1.5 text-xs text-slate-100 disabled:cursor-not-allowed"
         disabled={mode !== "live" || run?.status === "running"}
         oninput={(event) =>

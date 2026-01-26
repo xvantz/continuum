@@ -72,7 +72,7 @@ export const createLiveRuntime = (
     > = {
       requestRate: {
         label: "Rate (req/s)",
-        fix: "Set Rate between 20 and 200.",
+        fix: "Set Rate between 500 and 10000.",
       },
       payloadComplexity: {
         label: "Complexity",

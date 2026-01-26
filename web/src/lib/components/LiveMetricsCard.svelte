@@ -20,6 +20,26 @@
         <dt class="text-slate-400">Throughput</dt>
         <dd class="font-semibold text-white">{throughputTotal.toFixed(1)} /s</dd>
       </div>
+      {#if snapshot.endToEndLatency && snapshot.endToEndLatency.sampleCount > 0}
+        <div class="flex items-center justify-between">
+          <dt class="text-slate-400">E2E p50</dt>
+          <dd class="font-semibold text-white">
+            {snapshot.endToEndLatency.p50Ms.toFixed(1)} ms
+          </dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="text-slate-400">E2E p95</dt>
+          <dd class="font-semibold text-white">
+            {snapshot.endToEndLatency.p95Ms.toFixed(1)} ms
+          </dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="text-slate-400">E2E p99</dt>
+          <dd class="font-semibold text-white">
+            {snapshot.endToEndLatency.p99Ms.toFixed(1)} ms
+          </dd>
+        </div>
+      {/if}
       <div class="flex items-center justify-between">
         <dt class="text-slate-400">Snapshot #</dt>
         <dd class="font-semibold text-white">{snapshot.seq}</dd>

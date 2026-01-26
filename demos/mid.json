@@ -4,7 +4,7 @@
     "recordedAt": "2026-01-22T07:40:02.316Z",
     "durationMs": 0,
     "config": {
-      "requestRate": 80,
+      "requestRate": 2000,
       "payloadComplexity": 3,
       "nodeConcurrency": 3,
       "failureRate": 5,
@@ -680,7 +680,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.00001124604821939641,
+          "avgLatencyMs": 1.124604821939641e-05,
           "errorRate": 0
         },
         {
@@ -799,7 +799,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.000042365085127941146,
+          "avgLatencyMs": 4.2365085127941146e-05,
           "errorRate": 0
         },
         {
@@ -1442,7 +1442,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.00004968169022252148,
+          "avgLatencyMs": 4.968169022252148e-05,
           "errorRate": 0
         },
         {
@@ -1569,7 +1569,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.0000013984152598330268,
+          "avgLatencyMs": 1.3984152598330268e-06,
           "errorRate": 0
         },
         {
@@ -1815,7 +1815,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.000012711528383953388,
+          "avgLatencyMs": 1.2711528383953388e-05,
           "errorRate": 0
         },
         {
@@ -1942,7 +1942,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80.40201005025125,
-          "avgLatencyMs": 3.5779771558301263e-7,
+          "avgLatencyMs": 3.5779771558301263e-07,
           "errorRate": 0
         },
         {
@@ -2069,7 +2069,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 1.0071110366085451e-8,
+          "avgLatencyMs": 1.0071110366085451e-08,
           "errorRate": 0
         },
         {
@@ -2077,7 +2077,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.00007289459534357457,
+          "avgLatencyMs": 7.289459534357457e-05,
           "errorRate": 0
         },
         {
@@ -2585,7 +2585,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.00006517287105915633,
+          "avgLatencyMs": 6.517287105915633e-05,
           "errorRate": 0
         },
         {
@@ -2609,7 +2609,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.000010255827548020555,
+          "avgLatencyMs": 1.0255827548020555e-05,
           "errorRate": 0
         },
         {
@@ -2617,7 +2617,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 0.000040841724136246596,
+          "avgLatencyMs": 4.0841724136246596e-05,
           "errorRate": 0
         }
       ],
@@ -2736,7 +2736,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80.40201005025125,
-          "avgLatencyMs": 2.8867588202275925e-7,
+          "avgLatencyMs": 2.8867588202275925e-07,
           "errorRate": 0
         },
         {
@@ -2744,7 +2744,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80.40201005025125,
-          "avgLatencyMs": 0.0000011495923350073057,
+          "avgLatencyMs": 1.1495923350073057e-06,
           "errorRate": 0
         }
       ],
@@ -2863,7 +2863,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 8.125503716928428e-9,
+          "avgLatencyMs": 8.125503716928428e-09,
           "errorRate": 0
         },
         {
@@ -2871,7 +2871,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 3.235814757229302e-8,
+          "avgLatencyMs": 3.235814757229302e-08,
           "errorRate": 0
         }
       ],
@@ -3498,7 +3498,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.000005575186299776236,
+          "avgLatencyMs": 5.575186299776236e-06,
           "errorRate": 0
         },
         {
@@ -3625,7 +3625,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80.40201005025125,
-          "avgLatencyMs": 1.5692754338870858e-7,
+          "avgLatencyMs": 1.5692754338870858e-07,
           "errorRate": 0
         },
         {
@@ -3752,7 +3752,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 4.417117662059724e-9,
+          "avgLatencyMs": 4.417117662059724e-09,
           "errorRate": 0
         },
         {
@@ -5506,7 +5506,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.0000044592718523854955,
+          "avgLatencyMs": 4.4592718523854955e-06,
           "errorRate": 0
         },
         {
@@ -5530,7 +5530,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 79.60199004975124,
-          "avgLatencyMs": 0.00008112963841460684,
+          "avgLatencyMs": 8.112963841460684e-05,
           "errorRate": 0
         },
         {
@@ -5657,7 +5657,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80.40201005025125,
-          "avgLatencyMs": 0.0000022835963083295418,
+          "avgLatencyMs": 2.2835963083295418e-06,
           "errorRate": 0
         },
         {
@@ -5784,7 +5784,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 6.427752177035987e-8,
+          "avgLatencyMs": 6.427752177035987e-08,
           "errorRate": 0
         },
         {
@@ -5911,7 +5911,7 @@
           "inflight": 0,
           "queueLen": 0,
           "throughput": 80,
-          "avgLatencyMs": 1.8092513943330743e-9,
+          "avgLatencyMs": 1.8092513943330743e-09,
           "errorRate": 0
         },
         {

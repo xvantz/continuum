@@ -40,6 +40,16 @@ export const SpanErrorSchema = z.object({
 
 export type SpanError = z.infer<typeof SpanErrorSchema>;
 
+export const SpanPayloadSchema = z.object({
+  digest: z.string().min(1),
+  taskCount: z.number().int().nonnegative(),
+  matrixRows: z.number().int().nonnegative(),
+  matrixCols: z.number().int().nonnegative(),
+  vectorSize: z.number().int().nonnegative(),
+});
+
+export type SpanPayload = z.infer<typeof SpanPayloadSchema>;
+
 export const SpanSchema = z.object({
   spanId: z.string().min(1),
   traceId: z.string().min(1),
@@ -49,6 +59,7 @@ export const SpanSchema = z.object({
   endTime: z.number().nonnegative().nullable(),
   status: SpanStatusSchema,
   error: SpanErrorSchema.optional(),
+  payload: SpanPayloadSchema.optional(),
 });
 
 export type Span = z.infer<typeof SpanSchema>;
@@ -63,4 +74,3 @@ export type SpanEvent = z.infer<typeof SpanEventSchema>;
 export const parseTrace = makeParser(TraceSchema);
 export const parseSpan = makeParser(SpanSchema);
 export const parseSpanEvent = makeParser(SpanEventSchema);
-

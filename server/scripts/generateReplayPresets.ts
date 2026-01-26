@@ -29,7 +29,7 @@ const PRESETS: Preset[] = [
   {
     id: "easy",
     controls: buildControls({
-      requestRate: 30,
+      requestRate: 500,
       payloadComplexity: 1,
       nodeConcurrency: 1,
       failureRate: 1,
@@ -39,7 +39,7 @@ const PRESETS: Preset[] = [
   {
     id: "mid",
     controls: buildControls({
-      requestRate: 80,
+      requestRate: 2000,
       payloadComplexity: 3,
       nodeConcurrency: 3,
       failureRate: 5,
@@ -49,7 +49,7 @@ const PRESETS: Preset[] = [
   {
     id: "hard",
     controls: buildControls({
-      requestRate: 160,
+      requestRate: 5000,
       payloadComplexity: 5,
       nodeConcurrency: 6,
       failureRate: 10,

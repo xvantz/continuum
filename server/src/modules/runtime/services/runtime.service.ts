@@ -27,6 +27,7 @@ const pipelineOrder = [
   "router",
   "process-main",
   "process-fallback",
+  "db",
   "persist",
   "sink",
 ] as const;

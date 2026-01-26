@@ -1,11 +1,12 @@
 import { defineService } from "@server/src/core/modules";
 import type {
+  EndToEndLatency,
   MetricsSnapshot,
   NodeInspectPayload,
   NodeMetrics,
   EdgeMetrics,
 } from "@shared/metrics";
-import type { Span } from "@shared/trace";
+import type { Span, SpanPayload } from "@shared/trace";
 import type { Run } from "@shared/run";
 
 import type { SchedulerObserver } from "../lib/scheduler";
@@ -17,8 +18,10 @@ const ERROR_ALPHA = 0.2;
 const EDGE_ERROR_ALPHA = 0.2;
 const SPAN_TTL_MS = 120_000;
 const TRACE_BUFFER_LIMIT = 50;
+const E2E_LATENCY_BUFFER_LIMIT = 500;
 const SLOW_THRESHOLD_MS = 750;
 const EDGE_ATTR_KEY = "__last_edge";
+const EMPTY_PAYLOAD_DIGEST = "";
 
 type TraceEvent = {
   type: "trace.span.started" | "trace.span.ended";
@@ -28,6 +31,18 @@ type TraceEvent = {
 const ema = (current: number, sample: number, alpha = 0.2): number => {
   if (!Number.isFinite(current) || current === 0) return sample;
   return current * (1 - alpha) + sample * alpha;
+};
+
+const buildSpanPayload = (token: RuntimeToken): SpanPayload | null => {
+  const { payload } = token;
+  if (!payload.digest || payload.digest === EMPTY_PAYLOAD_DIGEST) return null;
+  return {
+    digest: payload.digest,
+    taskCount: payload.tasks.length,
+    matrixRows: payload.matrix.length,
+    matrixCols: payload.matrix[0]?.length ?? 0,
+    vectorSize: payload.normalizedVector.length,
+  };
 };
 
 class RingBuffer<T> {
@@ -89,12 +104,40 @@ const makeTraceBuffers = (): NodeTraceBuffers => ({
   slow: new RingBuffer(TRACE_BUFFER_LIMIT),
 });
 
+const buildLatencySummary = (values: number[]): EndToEndLatency => {
+  const sampleCount = values.length;
+  if (sampleCount === 0) {
+    return {
+      sampleCount: 0,
+      avgMs: 0,
+      p50Ms: 0,
+      p95Ms: 0,
+      p99Ms: 0,
+      maxMs: 0,
+    };
+  }
+  const sorted = [...values].sort((a, b) => a - b);
+  const sum = sorted.reduce((acc, value) => acc + value, 0);
+  const pick = (ratio: number) =>
+    sorted[Math.min(sorted.length - 1, Math.floor(ratio * (sorted.length - 1)))];
+  return {
+    sampleCount,
+    avgMs: sum / sampleCount,
+    p50Ms: pick(0.5),
+    p95Ms: pick(0.95),
+    p99Ms: pick(0.99),
+    maxMs: sorted[sorted.length - 1] ?? 0,
+  };
+};
+
 export const metricsService = defineService("runtime", ({ services }) => {
   const nodeStates = new Map<string, NodeState>();
   const edgeStatesByKey = new Map<string, EdgeState>();
   const edgeStatesById = new Map<string, EdgeState>();
   const nodeMetrics = new Map<string, NodeMetrics>();
   const edgeMetrics = new Map<string, EdgeMetrics>();
+  const e2eLatencies = new RingBuffer<number>(E2E_LATENCY_BUFFER_LIMIT);
+  let endToEndLatencySummary: EndToEndLatency | undefined = undefined;
   const traceStore = new Map<string, TraceSpanEntry>();
   const activeSpans = new Map<string, Span>();
   const snapshotListeners = new Set<(snapshot: MetricsSnapshot) => void>();
@@ -127,6 +170,7 @@ export const metricsService = defineService("runtime", ({ services }) => {
         startTime,
         endTime: null,
         status: "running",
+        payload: buildSpanPayload(token) ?? undefined,
       };
       activeSpans.set(`${token.trace.traceId}:${nodeId}`, span);
       upsertTraceSpan(span);
@@ -190,6 +234,8 @@ export const metricsService = defineService("runtime", ({ services }) => {
     edgeMetrics.clear();
     traceStore.clear();
     activeSpans.clear();
+    e2eLatencies.clear();
+    endToEndLatencySummary = undefined;
 
     const graph = runtime.getGraph();
     for (const node of graph.nodes) {
@@ -252,6 +298,8 @@ export const metricsService = defineService("runtime", ({ services }) => {
     edgeMetrics.clear();
     traceStore.clear();
     activeSpans.clear();
+    e2eLatencies.clear();
+    endToEndLatencySummary = undefined;
     latestSnapshot = {
       runId: "idle",
       seq: 0,
@@ -317,6 +365,7 @@ export const metricsService = defineService("runtime", ({ services }) => {
     }
 
     cleanupTraceStore(now);
+    endToEndLatencySummary = buildLatencySummary(e2eLatencies.values());
 
     latestSnapshot = {
       runId,
@@ -324,6 +373,7 @@ export const metricsService = defineService("runtime", ({ services }) => {
       tServerMs: now - runStartedAt,
       nodes: [...nodeMetrics.values()],
       edges: [...edgeMetrics.values()],
+      endToEndLatency: endToEndLatencySummary,
     };
     notifySnapshot();
   };
@@ -341,6 +391,10 @@ export const metricsService = defineService("runtime", ({ services }) => {
     if (span) {
       span.endTime = endTime;
       span.status = status === "ok" ? "ok" : "error";
+      const payload = buildSpanPayload(token);
+      if (payload) {
+        span.payload = payload;
+      }
       if (status === "error" && errorMessage) {
         span.error = { code: errorMessage, message: errorMessage };
       } else {
@@ -356,6 +410,10 @@ export const metricsService = defineService("runtime", ({ services }) => {
     const state = nodeStates.get(nodeId);
     if (state) {
       state.avgLatencyMs = ema(state.avgLatencyMs, durationMs, LATENCY_ALPHA);
+    }
+    if (status === "error" || nodeId === "sink") {
+      const e2eLatency = Math.max(0, endTime - token.trace.createdAtServerMs);
+      e2eLatencies.push(e2eLatency);
     }
   };
 

@@ -27,6 +27,8 @@
   };
 
   const formatTraceLabel = (id: string) => `${id.slice(0, 8)}…`;
+  const formatDigest = (digest: string) =>
+    digest.length > 12 ? `${digest.slice(0, 12)}…` : digest;
 
   $: timeline = spans.map((span) => {
     const reference = runStartMs ?? span.startTime;
@@ -64,6 +66,7 @@
       relativeStart,
       relativeEnd,
       error: span.error?.message ?? null,
+      payload: span.payload ?? null,
     };
   });
 </script>
@@ -133,6 +136,12 @@
             </div>
             {#if entry.error}
               <p class="mt-2 text-xs text-rose-200">{entry.error}</p>
+            {/if}
+            {#if entry.payload}
+              <p class="mt-2 text-xs text-slate-300">
+                payload {formatDigest(entry.payload.digest)} | tasks {entry.payload.taskCount} |
+                matrix {entry.payload.matrixRows}x{entry.payload.matrixCols} | vector {entry.payload.vectorSize}
+              </p>
             {/if}
           </div>
         {/each}

@@ -75,7 +75,7 @@ A processing module in the pipeline.
 
 nodeId: string
 
-kind: receive | validate | transform | router | persist | sink
+kind: receive | validate | transform | router | db | persist | sink
 
 concurrency: number (Max concurrent workers).
 
@@ -162,7 +162,7 @@ Note: Affects UI playback/interpolation only. Server always runs at 1.0x.
 
 5. Simulation Control & Load Generation
    5.1 Controls (Server Params)
-   requestRate: 20-200 req/sec.
+  requestRate: 500-10000 req/sec.
 
 payloadComplexity: 1-5 (Affects CPU time).
 
@@ -195,6 +195,8 @@ Transform: Modifies payload. Fan-out logic (Trace contains N tasks).
 Route: Logic to choose next path (Main or Fallback).
 
 Process: Heavy CPU work (Aggregation/Transformation).
+
+DB: Aggregation/sorting to emulate database work.
 
 Persist: Memory store write + Snapshotting.
 
@@ -250,7 +252,7 @@ Trace View: Visualize 1 active trace (Life of a request).
 
 Replay Mode: GitHub Pages demo reading static JSON.
 
-Constraint: Smooth 60fps UI, Server handles up to 200 RPS.
+Constraint: Smooth 60fps UI, Server handles up to 10000 RPS.
 
 10. Implementation Plan
     Phase 1: Core Runtime (Server)

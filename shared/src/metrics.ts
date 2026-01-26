@@ -23,12 +23,24 @@ export const EdgeMetricsSchema = z.object({
 
 export type EdgeMetrics = z.infer<typeof EdgeMetricsSchema>;
 
+export const EndToEndLatencySchema = z.object({
+  sampleCount: z.number().int().min(0),
+  avgMs: z.number().min(0),
+  p50Ms: z.number().min(0),
+  p95Ms: z.number().min(0),
+  p99Ms: z.number().min(0),
+  maxMs: z.number().min(0),
+});
+
+export type EndToEndLatency = z.infer<typeof EndToEndLatencySchema>;
+
 export const MetricsSnapshotSchema = z.object({
   runId: z.string().min(1),
   seq: z.number().int().min(0),
   tServerMs: z.number().min(0),
   nodes: z.array(NodeMetricsSchema),
   edges: z.array(EdgeMetricsSchema),
+  endToEndLatency: EndToEndLatencySchema.optional(),
 });
 
 export type MetricsSnapshot = z.infer<typeof MetricsSnapshotSchema>;
@@ -47,4 +59,3 @@ export type NodeInspectPayload = z.infer<typeof NodeInspectPayloadSchema>;
 
 export const parseMetricsSnapshot = makeParser(MetricsSnapshotSchema);
 export const parseNodeInspectPayload = makeParser(NodeInspectPayloadSchema);
-
